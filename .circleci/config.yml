@@ -50,6 +50,3 @@ workflows:
 
     jobs:
       - build
-
-- store_test_results:
-    path: test-results
