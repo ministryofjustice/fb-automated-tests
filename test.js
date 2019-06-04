@@ -26,7 +26,7 @@ async function withPage (t, run) {
   }
 }
 
-test.only('gov uk', withPage, async (t, page) => {
+test('gov uk', withPage, async (t, page) => {
   await page.goto('http://gov.uk')
   const currentURL = await page.url()
 
