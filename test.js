@@ -1,3 +1,5 @@
+/* eslint no-console: "off" */
+
 import test from 'ava'
 import puppeteer from 'puppeteer'
 
@@ -21,6 +23,12 @@ async function withPage (t, run) {
   try {
     await run(t, page)
   } finally {
+    const fileName = `${t.title}.png`
+
+    await page.screenshot({
+      path: `./test-results/screenshots/${fileName}`
+    })
+
     await page.close()
     await browser.close()
   }
