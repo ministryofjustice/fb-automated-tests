@@ -4,7 +4,10 @@ import puppeteer from 'puppeteer'
 const headless = true
 
 async function withPage (t, run) {
-  const browser = await puppeteer.launch({headless})
+  const browser = await puppeteer.launch({
+    headless,
+    args: ['--no-sandbox', '--disable-setuid-sandbox']
+  })
   const page = await browser.newPage()
 
   page.getText = async (selector) => {
