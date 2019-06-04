@@ -32,14 +32,38 @@ function sleep(ms = 1000) {
 	})
 }
 
-test('happy path in the form', withPage, async (t, page) => {
+test('gov uk', withPage, async (t, page) => {
   await page.goto('http://gov.uk')
   const currentURL = await page.url()
 
   console.log('Current URL: ', {currentURL});
 
   t.is(currentURL, 'https://www.gov.uk/')
-
-  await sleep(2000)
 })
 
+test('hmcts', withPage, async (t, page) => {
+  await page.goto('https://gov.uk/government/organisations/hm-courts-and-tribunals-service')
+  const currentURL = await page.url()
+
+  console.log('Current URL: ', {currentURL});
+
+  t.is(currentURL, 'https://www.gov.uk/government/organisations/hm-courts-and-tribunals-service')
+})
+
+test('met office', withPage, async (t, page) => {
+  await page.goto('https://metoffice.gov.uk')
+  const currentURL = await page.url()
+
+  console.log('Current URL: ', {currentURL});
+
+  t.is(currentURL, 'https://www.metoffice.gov.uk/')
+})
+
+test('tfl', withPage, async (t, page) => {
+  await page.goto('https://www.tfl.gov.uk')
+  const currentURL = await page.url()
+
+  console.log('Current URL: ', {currentURL});
+
+  t.is(currentURL, 'https://tfl.gov.uk/')
+})
