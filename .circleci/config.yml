@@ -26,8 +26,13 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
 
-      - run: npm run lint
-      - run: npm test
+      - run:
+        name: Runs ESLint on the JavaScript code
+        command: npm run lint
+
+      - run:
+        name: Runs browser based tests
+        command: npm test
 
 workflows:
   version: 2
