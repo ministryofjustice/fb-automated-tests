@@ -37,7 +37,7 @@ test('hmcts', withPage, async (t, page) => {
   await page.goto('https://gov.uk/government/organisations/hm-courts-and-tribunals-service')
   const currentURL = await page.url()
 
-  t.is(currentURL, 'https://www.gov.uk/gov2ernment/organisations/hm-courts-and-tribunals-service', 'correct url')
+  t.is(currentURL, 'https://www.gov.uk/government/organisations/hm-courts-and-tribunals-service', 'correct url')
 })
 
 test('met office', withPage, async (t, page) => {
