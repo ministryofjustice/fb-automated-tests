@@ -33,7 +33,7 @@ test('gov uk', withPage, async (t, page) => {
   t.is(currentURL, 'https://www.gov.uk/')
 })
 
-test.only('hmcts', withPage, async (t, page) => {
+test('hmcts', withPage, async (t, page) => {
   await page.goto('https://gov.uk/government/organisations/hm-courts-and-tribunals-service')
   const currentURL = await page.url()
 
