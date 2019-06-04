@@ -3,6 +3,8 @@
 import test from 'ava'
 import puppeteer from 'puppeteer'
 
+const shouldTakeScreenshots = process.argv.slice(2).includes('--screenshots')
+
 const headless = true
 
 async function withPage (t, run) {
@@ -23,11 +25,13 @@ async function withPage (t, run) {
   try {
     await run(t, page)
   } finally {
-    const fileName = `${t.title}.png`
+    if (shouldTakeScreenshots) {
+      const fileName = `${t.title}.png`
 
-    await page.screenshot({
-      path: `./test-results/screenshots/${fileName}`
-    })
+      await page.screenshot({
+        path: `./test-results/screenshots/${fileName}`
+      })
+    }
 
     await page.close()
     await browser.close()
