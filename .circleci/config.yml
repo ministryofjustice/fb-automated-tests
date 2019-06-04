@@ -25,14 +25,14 @@ jobs:
 
       - run:
           name: Runs ESLint on the JavaScript code
-          command: ./node_modules/.bin/eslint -f junit -o test-results/eslint/results.xml .
+          command: ./node_modules/.bin/eslint. 2>/dev/null || true && ./node_modules/.bin/eslint -f junit -o test-results/eslint/results.xml .
+
+      - store_test_results:
+          path: test-results
 
       - run:
           name: Runs browser based tests
           command: ./node_modules/.bin/ava -v
-
-      - store_test_results:
-          path: test-results
 
 workflows:
   version: 2
