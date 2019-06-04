@@ -18,8 +18,11 @@
     "puppeteer": "^1.17.0"
   },
   "ava": {
-      "require": [
-        "esm"
-      ]
+    "require": [
+      "esm"
+    ]
+  },
+  "devDependencies": {
+    "eslint-plugin-ava": "^7.0.0"
   }
 }

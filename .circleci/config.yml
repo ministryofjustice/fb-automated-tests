@@ -26,6 +26,7 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
 
+      - run: npm run lint
       - run: npm test
 
 workflows:
@@ -44,3 +45,6 @@ workflows:
 
     jobs:
       - build
+
+- store_test_results:
+    path: test-results
