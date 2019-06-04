@@ -4,9 +4,6 @@ jobs:
     docker:
       - image: buildkite/puppeteer:latest
 
-      # documented at https://circleci.com/docs/2.0/circleci-images/
-      # - image: circleci/mongo:3.4.4
-
     working_directory: ~/tests
 
     steps:
@@ -28,11 +25,11 @@ jobs:
 
       - run:
           name: Runs ESLint on the JavaScript code
-          command: npm run lint
+          command: ./node_modules/.bin/eslint -f junit -o test-results/eslint.xml .
 
       - run:
           name: Runs browser based tests
-          command: npm test
+          command: ./node_modules/.bin/ava -v
 
 workflows:
   version: 2
@@ -50,3 +47,6 @@ workflows:
 
     jobs:
       - build
+
+store_test_results:
+  path: test-results

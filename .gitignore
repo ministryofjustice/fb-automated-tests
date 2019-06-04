@@ -48,3 +48,5 @@ jspm_packages
 
 # Visual Studio Code files
 .vscode
+
+test-results

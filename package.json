@@ -6,7 +6,7 @@
   "main": "test.js",
   "scripts": {
     "lint": "eslint .",
-    "test": "ava --fail-fast -v"
+    "test": "npm run lint && ava -v"
   },
   "keywords": [],
   "author": "",
