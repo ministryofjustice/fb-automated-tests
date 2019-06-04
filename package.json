@@ -1,0 +1,25 @@
+{
+  "name": "fb-automated-tests",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Automated tests for a Form Builder form",
+  "main": "test.js",
+  "scripts": {
+    "lint": "eslint .",
+    "test": "ava --fail-fast -v"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@ministryofjustice/eslint-config-fb": "^1.0.6",
+    "ava": "^2.0.0",
+    "esm": "^3.2.25",
+    "puppeteer": "^1.17.0"
+  },
+  "ava": {
+      "require": [
+        "esm"
+      ]
+  }
+}
