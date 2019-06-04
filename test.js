@@ -33,12 +33,12 @@ function sleep(ms = 1000) {
 }
 
 test('happy path in the form', withPage, async (t, page) => {
-  await page.goto('https://example.com')
+  await page.goto('http://gov.uk')
   const currentURL = await page.url()
 
   console.log('Current URL: ', {currentURL});
 
-  t.is(currentURL, 'http://nope')
+  t.is(currentURL, 'https://www.gov.uk/')
 
   await sleep(2000)
 })
