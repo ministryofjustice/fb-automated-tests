@@ -23,6 +23,7 @@
     ]
   },
   "devDependencies": {
-    "eslint-plugin-ava": "^7.0.0"
+    "eslint-plugin-ava": "^7.0.0",
+    "tap-xunit": "^2.3.0"
   }
 }

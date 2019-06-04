@@ -32,7 +32,7 @@ jobs:
 
       - run:
           name: Runs browser based tests
-          command: ./node_modules/.bin/ava -v
+          command: mkdir -p test-results/ava && ./node_modules/.bin/ava --tap | ./node_modules/.bin/tap-xunit > test-results/ava/result.xml
 
 workflows:
   version: 2
