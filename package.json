@@ -6,7 +6,7 @@
   "main": "test.js",
   "scripts": {
     "lint": "eslint .",
-    "test": "npm run lint && ava -v"
+    "test": "ava --reset-cache && ava -v"
   },
   "keywords": [],
   "author": "",

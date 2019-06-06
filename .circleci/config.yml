@@ -33,7 +33,7 @@ jobs:
       - run:
           name: Runs browser based tests
           # command: mkdir -p test-results/ava && ./node_modules/.bin/ava --tap | ./node_modules/.bin/tap-xunit > test-results/ava/results.xml
-          command: mkdir -p test-results/screenshots && ./node_modules/.bin/ava -- --screenshots
+          command: ./node_modules/.bin/ava --reset-cache && mkdir -p test-results/screenshots && ./node_modules/.bin/ava -- --screenshots
 
       - store_artifacts:
           path: test-results/screenshots
