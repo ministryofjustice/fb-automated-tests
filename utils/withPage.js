@@ -2,7 +2,7 @@ import puppeteer from 'puppeteer'
 
 const shouldTakeScreenshots = process.argv.slice(2).includes('--screenshots')
 
-const headless = false
+const headless = true
 
 async function getText (page, selector) {
   const result = await page.evaluate((_selector) => {
