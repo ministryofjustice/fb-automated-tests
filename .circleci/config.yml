@@ -50,7 +50,7 @@ workflows:
     triggers:
       - schedule:
           # Step syntax is unsupported on CircleCI
-          cron: "0,20,40 * * * *"
+          cron: "0,30 * * * *"
           filters:
             branches:
               only: master
