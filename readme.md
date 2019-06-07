@@ -43,7 +43,9 @@ View the [ava](https://github.com/avajs/ava) docs to learn how to write assertio
 
 ### JavaScript
 
-Tests are written using modern JavaScript syntax, including [ES Modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import) and [async](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function) functions. Most puppeteer methods return promises, so you must remember to `await` them.
+Tests are written using modern JavaScript syntax, including [ES Modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import) and [async](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function) functions.
+
+Most puppeteer methods return promises, so you must remember to `await` them.
 
 ### Linting
 
@@ -55,7 +57,13 @@ To run linting (without running the automation tests), use:
 npm run lint
 ```
 
-To ensure tests are kept simple and easy to read, we extend our `.eslintrc` with a few rules such as the [Cyclomatic Complexity](https://eslint.org/docs/rules/complexity) and [max-depth](https://eslint.org/docs/rules/max-depth) rules and [ava recommended rules](https://github.com/avajs/eslint-plugin-ava). Most rules however are defined in [eslint-config-fb](https://github.com/ministryofjustice/eslint-config-fb).
+To ensure tests are kept simple, easy to read and easy to debug, we extend our `.eslintrc` with a few rules such as:
+
+* [Cyclomatic Complexity](https://eslint.org/docs/rules/complexity)
+* [max-depth](https://eslint.org/docs/rules/max-depth)
+* [ava recommended rules](https://github.com/avajs/eslint-plugin-ava)
+
+Most rules however are defined in [eslint-config-fb](https://github.com/ministryofjustice/eslint-config-fb).
 
 ### CircleCI
 
@@ -86,7 +94,8 @@ Browser based automation tests can be notoriously unreliable/flaky. Here are som
 
 * Do __not__ use `sleep`'s. Use the appropriate puppeteer methods, like `page.waitFor`
 * Use meaningful assertion messages - this ensures failed assertions communicate why they are failing effectively
-* When adding more complicated tests, or a big batch of tests, run them locally
+* When adding more complicated tests, or a big batch of tests, run them locally, at least a few times
+* Ensure test isolation. Tests are already set up to be completely isolated from one another. However be aware that forms are sesssion (cookie) based, and therefore stateful by default. Where possible, ensure tests do not rely on state.
 
 #### Testing locally
 
