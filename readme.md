@@ -5,12 +5,14 @@
 
 ### Introduction
 
-This repository includes browser automation tests for a single form hosted on the Form Builder platform. This test suite uses:
+This repository includes browser automation tests for a single form hosted on the Form Builder platform.
 
-- [ava](https://github.com/avajs/ava) for assertions
-- [puppeteer](https://github.com/GoogleChrome/puppeteer) for browser automation
+This test suite uses:
 
-![demo of automated tests](fb-automated-tests-preview-demo.gif)
+- [ava](https://github.com/avajs/ava) for assertions and the test runner
+- [puppeteer](https://github.com/GoogleChrome/puppeteer) for browser automation (headless Chrome)
+
+![demo of automated tests](docs/fb-automated-tests-preview-demo.gif)
 
 ### Run locally
 
@@ -25,7 +27,7 @@ npm test
 
 ### Writing a new test
 
-Duplicate any existing test and modify it to your use case. Tests typically look like:
+Duplicate any existing test in the `tests` folder and modify it to your use case. Tests typically look like:
 
 ```js
 test('Page has the correct URL', withPage, async (t, page) => {
@@ -45,13 +47,15 @@ Tests are written using modern JavaScript syntax, including [ES Modules](https:/
 
 ### Linting
 
-We use ESLint to lint our JavaScript code. To run linting, use:
+We use ESLint to lint our JavaScript code.
+
+To run linting (without running the automation tests), use:
 
 ```sh
 npm run lint
 ```
 
-To ensure tests are kept simple and easy to read, we extend our `.eslintrc` with a few rules such as the [Cyclomatic Complexity](https://eslint.org/docs/rules/complexity) and [max-depth](https://eslint.org/docs/rules/max-depth) rules. Most rules however are defined in [eslint-config-fb](https://github.com/ministryofjustice/eslint-config-fb).
+To ensure tests are kept simple and easy to read, we extend our `.eslintrc` with a few rules such as the [Cyclomatic Complexity](https://eslint.org/docs/rules/complexity) and [max-depth](https://eslint.org/docs/rules/max-depth) rules and [ava recommended rules](https://github.com/avajs/eslint-plugin-ava). Most rules however are defined in [eslint-config-fb](https://github.com/ministryofjustice/eslint-config-fb).
 
 ### CircleCI
 
@@ -65,7 +69,7 @@ Screenshots of the end-states of webpages are uploaded as artifacts to CircleCI.
 
 For example, if a web page completely fails to load, viewing the screenshot of the failing test will confirm this to you immediately.
 
-![artifact](circle-ci-artifacts.png)
+![artifact](docs/circle-ci-artifacts.png)
 
 To view a screenshot:
 
