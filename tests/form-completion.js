@@ -17,14 +17,14 @@ test('full form completion (form happy path)', withPage, async (t, page) => {
   t.is(await page.getText('.fb-flash-summary li'), 'Document file-upload-sample.png uploaded')
 
   const emailInputSelector = '[id="page.confirm-your-email--email.auto_name__3"]'
-  await page.type(emailInputSelector, 'umar.hansa@gmail.com')
+  await page.type(emailInputSelector, 'test@example.com')
   await page.clickAndWait(config.submitButton)
 
   t.is(await page.getText('h1'), 'Check your answers')
   t.is(await page.getText(config.submitButton), 'Accept and send application')
   await page.clickAndWait(config.submitButton)
 
-  t.is(await page.getText('.govuk-panel__body'), 'We\'ll email umar.hansa@gmail.com')
+  t.is(await page.getText('.govuk-panel__body'), 'We\'ll email test@example.com')
 
   t.is(await page.$(config.submitButton), null, 'There is not submit button on the final page')
 })
