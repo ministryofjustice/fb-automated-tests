@@ -19,6 +19,10 @@ function clickAndWait (page, selector) {
   ])
 }
 
+function getHash (page) {
+  return page.evaluate(() => window.location.hash)
+}
+
 async function withPage (t, run) {
   const browser = await puppeteer.launch({
     headless,
@@ -28,6 +32,7 @@ async function withPage (t, run) {
 
   page.getText = selector => getText(page, selector)
   page.clickAndWait = selector => clickAndWait(page, selector)
+  page.getHash = () => getHash(page)
 
   try {
     await run(t, page)

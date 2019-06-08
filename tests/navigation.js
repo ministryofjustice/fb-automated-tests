@@ -19,4 +19,5 @@ test('navigating backwards when landing in the middle of a form', withPage, asyn
   t.is(await page.url(), `${config.formURL}do-you-want-to-continue`, 'Goes back to the first question page')
   await page.clickAndWait('.govuk-back-link')
   t.is(await page.url(), config.formURL, 'Continuing to click back takes you to the home page')
+  t.is(await page.$('.govuk-back-link'), null, 'There is no back link on the homepage')
 })
