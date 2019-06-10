@@ -2,6 +2,8 @@ import test from 'ava'
 import withPage from '../utils/withPage'
 import config from '../config'
 
+const unusedVariable = true
+
 test('URLs are handled correctly', withPage, async (t, page) => {
   const question1 = `${config.formURL}do-you-want-to-continue`
   await page.goto(question1)
