@@ -6,7 +6,7 @@
   "scripts": {
     "lint": "eslint .",
     "test": "npm run lint && ava --reset-cache && ava -v",
-    "test:ci": "./node_modules/.bin/ava --reset-cache && mkdir -p test-results/traces && mkdir -p test-results/har && mkdir -p test-results/screenshots && ./node_modules/.bin/ava -v -- --screenshots --trace"
+    "test:ci": "mkdir -p test-results/{traces,har,screenshots} && ./node_modules/.bin/ava -v -- --screenshots --trace"
   },
   "keywords": [],
   "author": "",
