@@ -18,7 +18,7 @@ async function getText (page, selector) {
 
 function clickAndWait (page, selector) {
   return Promise.all([
-    page.waitForNavigation({waitUntil: 'networkidle2'}),
+    page.waitForNavigation({waitUntil: 'domcontentloaded'}),
     page.click(selector)
   ])
 }

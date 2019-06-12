@@ -30,6 +30,7 @@ async function trackHAR (page) {
   }
 
   return async function writeHAR (HARFileName) {
+    // client.detach()
     const har = harFromMessages(events)
     await writeFile(HARFileName, JSON.stringify(har, null, 2))
   }
