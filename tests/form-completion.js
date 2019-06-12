@@ -4,9 +4,7 @@ import config from '../config'
 
 test('Full form completion (form happy path)', withPage, async (t, page) => {
   await page.goto(config.formURL)
-
   await page.clickAndWait(config.submitButton)
-
   await page.click('#auto_name__1-0')
   await page.clickAndWait(config.submitButton)
 

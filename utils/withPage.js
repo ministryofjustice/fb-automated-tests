@@ -1,6 +1,8 @@
 import puppeteer from 'puppeteer'
 
 const shouldTakeScreenshots = process.argv.slice(2).includes('--screenshots')
+const shouldDumpTrace = process.argv.slice(2).includes('--trace')
+const testResultsFolder = './test-results'
 
 const headless = true
 
@@ -35,14 +37,25 @@ async function withPage (t, run) {
   page.getHash = () => getHash(page)
 
   try {
+    if (shouldDumpTrace) {
+      await page.tracing.start({
+        path: `${testResultsFolder}/traces/${t.title}.json`,
+        screenshots: true
+      })
+    }
+
     await run(t, page)
   } finally {
     if (shouldTakeScreenshots) {
       const fileName = `${t.title}.png`
 
       await page.screenshot({
-        path: `./test-results/screenshots/${fileName}`
+        path: `${testResultsFolder}/screenshots/${fileName}`
       })
+    }
+
+    if (shouldDumpTrace) {
+      await page.tracing.stop()
     }
 
     await page.close()

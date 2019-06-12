@@ -1,5 +1,5 @@
 
-## Form builder automated tests
+## Form Builder Automated Tests
 
 [![CircleCI](https://circleci.com/gh/ministryofjustice/fb-automated-tests/tree/master.svg?style=svg)](https://circleci.com/gh/ministryofjustice/fb-automated-tests/tree/master)
 
@@ -14,7 +14,7 @@ This test suite uses:
 
 ![demo of automated tests](docs/fb-automated-tests-preview-demo.gif)
 
-### Run locally
+### Running locally
 
 You'll need Node.js installed.
 

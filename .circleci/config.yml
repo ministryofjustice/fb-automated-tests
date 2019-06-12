@@ -25,18 +25,17 @@ jobs:
 
       - run:
           name: Runs ESLint on the JavaScript code
-          command: ./node_modules/.bin/eslint . 2>/dev/null || true && ./node_modules/.bin/eslint -f junit -o test-results/eslint/results.xml .
+          command: npm run lint
 
       - store_test_results:
           path: test-results
 
       - run:
           name: Runs browser based tests
-          # command: mkdir -p test-results/ava && ./node_modules/.bin/ava --tap | ./node_modules/.bin/tap-xunit > test-results/ava/results.xml
-          command: ./node_modules/.bin/ava --reset-cache && mkdir -p test-results/screenshots && ./node_modules/.bin/ava -- --screenshots
+          command: ./node_modules/.bin/ava --reset-cache && mkdir -p test-results/screenshots && mkdir -p test-results/traces && ./node_modules/.bin/ava -- --screenshots --trace
 
       - store_artifacts:
-          path: test-results/screenshots
+          path: test-results
 
       - store_test_results:
           path: test-results
@@ -50,7 +49,7 @@ workflows:
     triggers:
       - schedule:
           # Step syntax is unsupported on CircleCI
-          cron: "0,30 * * * *"
+          cron: "0,10,20,30,40,50 * * * *"
           filters:
             branches:
               only: master

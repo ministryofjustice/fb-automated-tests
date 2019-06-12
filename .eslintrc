@@ -4,7 +4,7 @@
   	"plugin:ava/recommended"
   ],
   "rules": {
-	  "complexity": ["error", 2],
-	  "max-depth": ["error", 2]
+	  "complexity": ["error", 4],
+	  "max-depth": ["error", 4]
   }
 }
