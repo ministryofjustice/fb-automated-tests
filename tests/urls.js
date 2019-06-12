@@ -2,7 +2,7 @@ import test from 'ava'
 import withPage from '../utils/withPage'
 import config from '../config'
 
-test('URLs are handled correctly', withPage, async (t, page) => {
+test('URL handling', withPage, async (t, page) => {
   const question1 = `${config.formURL}do-you-want-to-continue`
   await page.goto(question1)
   t.is(await page.url(), config.formURL, 'Navigating to a question page without a session should redirect to the main form home page')

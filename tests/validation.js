@@ -2,7 +2,7 @@ import test from 'ava'
 import withPage from '../utils/withPage'
 import config from '../config'
 
-test('Redirect to the same question if validation fails', withPage, async (t, page) => {
+test('Redirecting to the same question if validation fails', withPage, async (t, page) => {
   await page.goto(config.formURL)
   await page.clickAndWait(config.submitButton)
   const currentURL = await page.url()

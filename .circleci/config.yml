@@ -32,7 +32,7 @@ jobs:
 
       - run:
           name: Runs browser based tests
-          command: ./node_modules/.bin/ava --reset-cache && mkdir -p test-results/screenshots && mkdir -p test-results/traces && ./node_modules/.bin/ava -- --screenshots --trace
+          command: ./node_modules/.bin/ava --reset-cache && mkdir -p test-results/{traces,har,screenshots} && ./node_modules/.bin/ava -- --screenshots --trace
 
       - store_artifacts:
           path: test-results

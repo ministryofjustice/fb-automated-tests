@@ -10,7 +10,7 @@ test('Navigating backwards after navigating forwards', withPage, async (t, page)
   t.is(await page.url(), config.formURL, 'Clicking back takes you to the main form homepage')
 })
 
-test('navigating backwards when landing in the middle of a form', withPage, async (t, page) => {
+test('Navigating backwards when landing in the middle of a form', withPage, async (t, page) => {
   await page.goto(config.formURL)
   await page.goto(`${config.formURL}check-answers`)
   await page.clickAndWait('.govuk-back-link')

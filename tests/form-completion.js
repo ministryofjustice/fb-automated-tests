@@ -2,7 +2,7 @@ import test from 'ava'
 import withPage from '../utils/withPage'
 import config from '../config'
 
-test('Full form completion (form happy path)', withPage, async (t, page) => {
+test('Full form completion', withPage, async (t, page) => {
   await page.goto(config.formURL)
   await page.clickAndWait(config.submitButton)
   await page.click('#auto_name__1-0')
