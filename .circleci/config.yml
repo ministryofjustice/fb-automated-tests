@@ -32,7 +32,7 @@ jobs:
 
       - run:
           name: Runs browser based tests
-          command: npm run test:ci
+          command: cd ~/tests && npm run test:ci
 
       - store_artifacts:
           path: test-results
