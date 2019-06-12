@@ -1,8 +1,5 @@
-import fs from 'fs'
 import puppeteer from 'puppeteer'
-import {harFromMessages} from 'chrome-har'
-
-const writeFile = fs.promises.writeFile
+import trackHAR from './har'
 
 const shouldTakeScreenshots = process.argv.slice(2).includes('--screenshots')
 const shouldDumpTrace = process.argv.slice(2).includes('--trace')
@@ -28,39 +25,6 @@ function clickAndWait (page, selector) {
 
 function getHash (page) {
   return page.evaluate(() => window.location.hash)
-}
-
-async function trackHAR (page) {
-  const events = []
-
-  const observe = [
-    'Page.loadEventFired',
-    'Page.domContentEventFired',
-    'Page.frameStartedLoading',
-    'Page.frameAttached',
-    'Network.requestWillBeSent',
-    'Network.requestServedFromCache',
-    'Network.dataReceived',
-    'Network.responseReceived',
-    'Network.resourceChangedPriority',
-    'Network.loadingFinished',
-    'Network.loadingFailed'
-  ]
-
-  const client = await page.target().createCDPSession()
-  await client.send('Page.enable')
-  await client.send('Network.enable')
-
-  observe.forEach(method => {
-    client.on(method, params => {
-      events.push({method, params})
-    })
-  })
-
-  return async function writeHAR (HARFileName) {
-    const har = harFromMessages(events)
-    await writeFile(HARFileName, JSON.stringify(har))
-  }
 }
 
 async function withPage (t, run) {
