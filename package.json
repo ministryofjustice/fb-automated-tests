@@ -14,7 +14,7 @@
   "dependencies": {
     "@ministryofjustice/eslint-config-fb": "^1.0.7",
     "ava": "^2.0.0",
-    "chrome-har": "https://github.com/juvirez/chrome-har-client.git",
+    "chrome-har": "^0.10.0",
     "esm": "^3.2.25",
     "puppeteer": "^1.17.0"
   },
