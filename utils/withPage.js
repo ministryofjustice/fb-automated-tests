@@ -55,7 +55,8 @@ async function withPage (t, run) {
       const fileName = `${t.title}.png`
 
       await page.screenshot({
-        path: `${testResultsFolder}/screenshots/${fileName}`
+        path: `${testResultsFolder}/screenshots/${fileName}`,
+        fullPage: true
       })
     }
 
