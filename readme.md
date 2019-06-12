@@ -22,6 +22,11 @@ Run the following commands within this project:
 
 ```sh
 npm install
+
+# also dumps out screenshots & traces in the `test-results` folder
+npm run test:ci
+
+# without dumping screenshots and traces
 npm test
 ```
 
@@ -83,6 +88,10 @@ To view a screenshot:
 
 1. Navigate to the Artifacts tab of your build on CircleCI
 2. Click the screenshot, where the file name matches the test name
+
+#### Traces
+
+[HAR](https://en.wikipedia.org/wiki/.har) files and Chrome traces are also stored in the `har` and `traces` folder respectively.
 
 #### Parallelism
 
