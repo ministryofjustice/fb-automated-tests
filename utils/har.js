@@ -11,6 +11,7 @@ async function trackHAR (page) {
     'Page.domContentEventFired',
     'Page.frameStartedLoading',
     'Page.frameAttached',
+    'Page.frameScheduledNavigation',
     'Network.requestWillBeSent',
     'Network.requestServedFromCache',
     'Network.dataReceived',
@@ -30,7 +31,7 @@ async function trackHAR (page) {
 
   return async function writeHAR (HARFileName) {
     const har = harFromMessages(events)
-    await writeFile(HARFileName, JSON.stringify(har))
+    await writeFile(HARFileName, JSON.stringify(har, null, 2))
   }
 }
 

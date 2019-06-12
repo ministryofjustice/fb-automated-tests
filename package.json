@@ -5,7 +5,8 @@
   "description": "Automated tests for a Form Builder form",
   "scripts": {
     "lint": "eslint .",
-    "test": "npm run lint && ava --reset-cache && ava -v"
+    "test": "npm run lint && ava --reset-cache && ava -v",
+    "test:ci": "./node_modules/.bin/ava --reset-cache && mkdir -p test-results/{traces,har,screenshots} && ./node_modules/.bin/ava -v -- --screenshots --trace"
   },
   "keywords": [],
   "author": "",
