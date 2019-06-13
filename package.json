@@ -13,9 +13,11 @@
   "license": "ISC",
   "dependencies": {
     "@ministryofjustice/eslint-config-fb": "^1.0.7",
-    "ava": "^2.0.0",
+    "ava": "^2.1.0",
     "chrome-har": "^0.10.0",
     "esm": "^3.2.25",
+    "mailosaur": "^5.0.8",
+    "npm-check-updates": "^3.1.10",
     "puppeteer": "^1.17.0"
   },
   "ava": {
@@ -24,6 +26,6 @@
     ]
   },
   "devDependencies": {
-    "eslint-plugin-ava": "^7.0.0"
+    "eslint-plugin-ava": "^7.1.0"
   }
 }

@@ -12,11 +12,11 @@ test('Form has the correct metadata', withPage, async (t, page) => {
 
   t.is(await page.getText('h1'), config.formTitle, 'The form heading text is correct')
 
-  await page.clickAndWait('header a')
-  t.is(await page.url(), config.formURL, 'Clicking the header logo redirects to the main form homepage')
+  await page.clickAndWait('.govuk-header__content a')
+  t.is(await page.url(), config.formURL, 'Clicking the header link redirects to the main form homepage')
   await page.clickAndWait(config.submitButton)
 
-  await page.clickAndWait('header a')
+  await page.clickAndWait('.govuk-header__content a')
   t.is(await page.url(), config.formURL, 'Clicking the header logo while in the middle of a form journey redirects to the main form homepage')
 
   const phase = await page.getText('.govuk-phase-banner__content__tag')
