@@ -1,4 +1,3 @@
-
 ## Form Builder Automated Tests
 
 [![CircleCI](https://circleci.com/gh/ministryofjustice/fb-automated-tests/tree/master.svg?style=svg)](https://circleci.com/gh/ministryofjustice/fb-automated-tests/tree/master)
