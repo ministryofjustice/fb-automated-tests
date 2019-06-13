@@ -2,7 +2,7 @@
   "name": "fb-automated-tests",
   "private": true,
   "version": "1.0.0",
-  "description": "Automated tests for a Form Builder form",
+  "description": "End to end tests for a Form Builder form",
   "scripts": {
     "lint": "eslint .",
     "test": "npm run lint && ava --reset-cache && ava -v",
