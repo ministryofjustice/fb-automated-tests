@@ -8,8 +8,6 @@
     "test": "npm run lint && ava --reset-cache && ava -v",
     "test:ci": "rm -rf test-results && mkdir -p test-results/traces && mkdir -p test-results/har && mkdir -p test-results/screenshots && node ./node_modules/.bin/ava -v -- --screenshots --trace"
   },
-  "keywords": [],
-  "author": "",
   "license": "ISC",
   "dependencies": {
     "@ministryofjustice/eslint-config-fb": "^1.0.7",
