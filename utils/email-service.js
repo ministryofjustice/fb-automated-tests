@@ -5,6 +5,7 @@ dotenv.config()
 
 const APIKey = process.env.EMAIL_SERVICE_API_KEY
 const serverID = process.env.EMAIL_SERVICE_SERVER_ID
+
 const client = new MailosaurClient(APIKey)
 
 function waitForEmail (recipientEmail) {
@@ -13,7 +14,7 @@ function waitForEmail (recipientEmail) {
   })
 }
 
-function getRandomEmailAddress () {
+function generateRandomEmailAddress () {
   return client.servers.generateEmailAddress(serverID)
 }
 
@@ -22,7 +23,7 @@ function getAttachment (id) {
 }
 
 export {
-  getRandomEmailAddress,
+  generateRandomEmailAddress,
   waitForEmail,
   getAttachment
 }

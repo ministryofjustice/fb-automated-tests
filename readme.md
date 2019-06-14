@@ -31,7 +31,10 @@ npm test
 
 #### Setting up environment variables for the email testing service
 
-1. Rename `.env.sample` to `.env` and fill in the secrets accordingly. On CircleCI, these secrets have been entered as environment variables [through the app](https://circleci.com/gh/ministryofjustice/fb-automated-tests/edit#env-vars)
+Rename `.env.sample` to `.env` and fill in the [mailosaur](https://mailosaur.com/) secrets accordingly. On CircleCI, these secrets have been entered as environment variables [through the app](https://circleci.com/gh/ministryofjustice/fb-automated-tests/edit#env-vars)
+
+* `EMAIL_SERVICE_API_KEY` is the API key which you can get from the dashboard
+* `EMAIL_SERVICE_SERVER_ID` is the mailbox server ID which you can get from the dashboard
 
 ### Writing a new test
 

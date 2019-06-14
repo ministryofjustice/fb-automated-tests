@@ -1,74 +1,69 @@
 import puppeteer from 'puppeteer'
 import trackHAR from './har'
 
-const shouldTakeScreenshots = process.argv.slice(2).includes('--screenshots')
-const shouldDumpTrace = process.argv.slice(2).includes('--trace')
+import {
+  getText,
+  clickAndWait,
+  getHash
+} from './extra-page-methods'
 
-const testResultsFolder = './test-results'
+const args = process.argv.slice(2)
 
-const headless = true
-
-async function getText (page, selector) {
-  const result = await page.evaluate((_selector) => {
-    return window.document.querySelector(_selector).innerText
-  }, selector)
-
-  return result
-}
-
-function clickAndWait (page, selector) {
-  return Promise.all([
-    page.waitForNavigation({waitUntil: 'domcontentloaded'}),
-    page.click(selector)
-  ])
-}
-
-function getHash (page) {
-  return page.evaluate(() => window.location.hash)
+const settings = {
+  shouldTakeScreenshots: args.includes('--screenshots'),
+  shouldDumpTrace: args.includes('--trace'),
+  testResultsFolder: './test-results',
+  headless: true,
+  chromeFlags: [
+    // https://developers.google.com/web/tools/puppeteer/troubleshooting
+    '--no-sandbox',
+    '--disable-setuid-sandbox'
+  ]
 }
 
 async function withPage (t, run) {
   const browser = await puppeteer.launch({
-    headless,
-    args: ['--no-sandbox', '--disable-setuid-sandbox']
+    headless: settings.headless,
+    args: settings.chromeFlags
   })
   const page = await browser.newPage()
-  let writeHAR
-
-  if (shouldDumpTrace) {
-    writeHAR = await trackHAR(page)
-
-    await page.tracing.start({
-      path: `${testResultsFolder}/traces/${t.title}.json`,
-      screenshots: true
-    })
-  }
 
   page.getText = selector => getText(page, selector)
   page.clickAndWait = selector => clickAndWait(page, selector)
   page.getHash = () => getHash(page)
 
+  let writeHAR
+
+  if (settings.shouldDumpTrace) {
+    writeHAR = await trackHAR(page)
+
+    await page.tracing.start({
+      path: `${settings.testResultsFolder}/traces/${t.title}.json`,
+      screenshots: true
+    })
+  }
+
   try {
     await run(t, page)
   } finally {
-    if (shouldTakeScreenshots) {
+    if (settings.shouldTakeScreenshots) {
       const fileName = `${t.title}.png`
 
       await page.screenshot({
-        path: `${testResultsFolder}/screenshots/${fileName}`,
+        path: `${settings.testResultsFolder}/screenshots/${fileName}`,
         fullPage: true
       })
     }
 
-    if (shouldDumpTrace) {
+    if (settings.shouldDumpTrace) {
       await page.tracing.stop()
     }
 
     await page.close()
     await browser.close()
 
-    if (shouldDumpTrace) {
-      const HARFileName = `${testResultsFolder}/har/${t.title}.har`
+    if (settings.shouldDumpTrace) {
+      const HARFileName = `${settings.testResultsFolder}/har/${t.title}.har`
       await writeHAR(HARFileName)
     }
   }

@@ -4,13 +4,18 @@ import pdf from 'pdf-parse'
 import withPage from '../utils/withPage'
 import config from '../config'
 import {
-  getRandomEmailAddress,
+  generateRandomEmailAddress,
   waitForEmail,
   getAttachment
 } from '../utils/email-service'
 
-test('Full form completion', withPage, async (t, page) => {
-  const recipientEmail = getRandomEmailAddress()
+async function getPDFText(file) {
+  const {text: PDFText} = await pdf(file)
+  return PDFText
+}
+
+test('Full form completion including the email PDF', withPage, async (t, page) => {
+  const recipientEmail = generateRandomEmailAddress()
 
   await page.goto(config.formURL)
   await page.clickAndWait(config.submitButton)
@@ -49,7 +54,7 @@ test('Full form completion', withPage, async (t, page) => {
 
   const [attachment] = attachments
   const attachmentFile = await getAttachment(attachment.id)
-  const {text: PDFText} = await pdf(attachmentFile)
+  const PDFText = await getPDFText(attachmentFile)
 
   t.is(fromEmail, 'form-builder@digital.justice.gov.uk', 'From email address is correct')
   t.is(toEmail, recipientEmail, 'To email address is correct')
