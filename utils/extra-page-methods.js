@@ -19,7 +19,7 @@ function getHash (page) {
 }
 
 export {
-	getText,
-	clickAndWait,
-	getHash
+  getText,
+  clickAndWait,
+  getHash
 }

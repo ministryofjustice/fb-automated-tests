@@ -9,7 +9,7 @@ import {
   getAttachment
 } from '../utils/email-service'
 
-async function getPDFText(file) {
+async function getPDFText (file) {
   const {text: PDFText} = await pdf(file)
   return PDFText
 }
