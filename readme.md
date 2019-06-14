@@ -29,6 +29,10 @@ npm run test:ci
 npm test
 ```
 
+#### Setting up environment variables for the email testing service
+
+1. Rename `.env.sample` to `.env` and fill in the secrets accordingly. On CircleCI, these secrets have been entered as environment variables [through the app](https://circleci.com/gh/ministryofjustice/fb-automated-tests/edit#env-vars)
+
 ### Writing a new test
 
 Duplicate any existing test in the `tests` folder and modify it to your use case. Tests typically look like:
