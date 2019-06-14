@@ -38,7 +38,6 @@ test('Full form completion', withPage, async (t, page) => {
 
   t.is(await page.$(config.submitButton), null, 'There is no submit button on the final exit page')
 
-  console.log('Waiting for email to', emailToSendTo)
   let result = await client.messages.waitFor(serverID, {sentTo: emailToSendTo})
 
   let {
