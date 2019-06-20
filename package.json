@@ -16,7 +16,6 @@
     "dotenv": "^8.0.0",
     "esm": "^3.2.25",
     "mailosaur": "^5.0.8",
-    "npm-check-updates": "^3.1.10",
     "pdf-parse": "^1.1.1",
     "puppeteer": "^1.17.0"
   },
