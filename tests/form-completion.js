@@ -28,7 +28,7 @@ test('Full form completion including the email PDF', withPage, async (t, page) =
 
   t.is(await page.getText('.fb-flash-summary li'), 'Document file-upload-sample.png uploaded')
 
-  const emailInputSelector = '[id="page.confirm-your-email--email.auto_name__3"]'
+  const emailInputSelector = '[id="page_confirm-your-email--email_auto_name_3"]'
   await page.type(emailInputSelector, recipientEmail)
   await page.clickAndWait(config.submitButton)
 

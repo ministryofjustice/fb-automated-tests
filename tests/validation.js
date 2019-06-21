@@ -47,14 +47,14 @@ test('Navigating back and forward and should clear the error message', withPage,
   t.truthy(await page.$('#error-summary-title'))
 })
 
-test('Correctly answering a question removes an existing error message', withPage, async (t, page) => {
+test.only('Correctly answering a question removes an existing error message', withPage, async (t, page) => {
   await page.goto(config.formURL)
   await page.clickAndWait(config.submitButton)
   await page.clickAndWait(config.submitButton)
 
   t.truthy(await page.$('#error-summary-title'))
 
-  await page.click('label[for=\'auto_name_1-0\']')
+  await page.click('#auto_name_1-0')
   await page.clickAndWait(config.submitButton)
   t.is(await page.$('#error-summary-title'), null)
   t.is(await page.url(), 'https://automated-testing.dev.test.form.service.justice.gov.uk/some-questions', 'User is sent to the next question')
