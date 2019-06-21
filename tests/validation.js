@@ -47,7 +47,7 @@ test('Navigating back and forward and should clear the error message', withPage,
   t.truthy(await page.$('#error-summary-title'))
 })
 
-test.only('Correctly answering a question removes an existing error message', withPage, async (t, page) => {
+test('Correctly answering a question removes an existing error message', withPage, async (t, page) => {
   await page.goto(config.formURL)
   await page.clickAndWait(config.submitButton)
   await page.clickAndWait(config.submitButton)
