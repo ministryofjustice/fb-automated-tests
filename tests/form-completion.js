@@ -19,7 +19,7 @@ test('Full form completion including the email PDF', withPage, async (t, page) =
 
   await page.goto(config.formURL)
   await page.clickAndWait(config.submitButton)
-  await page.click('#auto_name__1-0')
+  await page.click('#auto_name_1-0')
   await page.clickAndWait(config.submitButton)
 
   const input = await page.$('[name="auto_name__2[1]"]')

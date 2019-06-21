@@ -54,7 +54,7 @@ test('Correctly answering a question removes an existing error message', withPag
 
   t.truthy(await page.$('#error-summary-title'))
 
-  await page.click('label[for=\'auto_name__1-0\']')
+  await page.click('label[for=\'auto_name_1-0\']')
   await page.clickAndWait(config.submitButton)
   t.is(await page.$('#error-summary-title'), null)
   t.is(await page.url(), 'https://automated-testing.dev.test.form.service.justice.gov.uk/some-questions', 'User is sent to the next question')

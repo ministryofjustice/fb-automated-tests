@@ -5,7 +5,7 @@ import config from '../config'
 test('File upload validation for a single file', withPage, async (t, page) => {
   await page.goto(config.formURL)
   await page.clickAndWait(config.submitButton)
-  await page.click('#auto_name__1-0')
+  await page.click('#auto_name_1-0')
   await page.clickAndWait(config.submitButton)
   await page.clickAndWait(config.submitButton)
 
@@ -20,7 +20,7 @@ test('File upload validation for a single file', withPage, async (t, page) => {
 test('File upload for multiple files', withPage, async (t, page) => {
   await page.goto(config.formURL)
   await page.clickAndWait(config.submitButton)
-  await page.click('#auto_name__1-0')
+  await page.click('#auto_name_1-0')
   await page.clickAndWait(config.submitButton)
 
   const firstInput = await page.$('[name="auto_name__2[1]"]')
@@ -40,7 +40,7 @@ test('File upload for multiple files', withPage, async (t, page) => {
 test('Removing uploaded files', withPage, async (t, page) => {
   await page.goto(config.formURL)
   await page.clickAndWait(config.submitButton)
-  await page.click('#auto_name__1-0')
+  await page.click('#auto_name_1-0')
   await page.clickAndWait(config.submitButton)
 
   const initialInput = await page.$('[name="auto_name__2[1]"]')
