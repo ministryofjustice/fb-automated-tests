@@ -40,6 +40,7 @@ test('Full form completion including the email PDF', withPage, async (t, page) =
 
   t.is(await page.$(config.submitButton), null, 'There is no submit button on the final exit page')
 
+  console.log(`Checking for email (${(new Date()).toString()})`) // eslint-disable-line no-console
   let result = await waitForEmail(recipientEmail)
 
   const {
