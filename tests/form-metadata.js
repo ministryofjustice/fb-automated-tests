@@ -6,7 +6,7 @@ test('Form has the correct metadata', withPage, async (t, page) => {
   await page.goto(config.formURL)
 
   const currentTitle = await page.title()
-  t.true(currentTitle === 'GOV.UK - The best place to find government services and information', 'Page title is correct')
+  t.is(currentTitle, 'A form for testing - GOV.UK', 'Page title is correct')
 
   t.is(await page.url(), config.formURL, 'The form URL is correct')
 

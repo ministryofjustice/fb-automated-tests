@@ -14,7 +14,7 @@ test('File upload validation for a single file', withPage, async (t, page) => {
   t.is(await page.getHash(), '', 'There is no hash in the URL')
   const errorLinks = await page.$$('.govuk-error-summary__list a')
   await errorLinks[0].click()
-  t.is(await page.getHash(), '#page.some-questions--fileupload.auto_name__2', 'Clicking the error message adds the question ID to the URL hash')
+  t.is(await page.getHash(), '#page_some-questions--fileupload_auto_name_2', 'Clicking the error message adds the question ID to the URL hash')
 })
 
 test('File upload for multiple files', withPage, async (t, page) => {

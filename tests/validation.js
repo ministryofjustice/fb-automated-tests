@@ -26,7 +26,7 @@ test('Flash messages for failed validation appear', withPage, async (t, page) =>
 
   t.is(await page.getHash(), '', 'There is no hash in the URL')
   await errorLinks[0].click()
-  t.is(await page.getHash(), '#page.do-you-want-to-continue--radios.auto_name__1', 'Clicking the error message adds the question ID to the URL hash')
+  t.is(await page.getHash(), '#page_do-you-want-to-continue--radios_auto_name_1', 'Clicking the error message adds the question ID to the URL hash')
 
   // TODO: BUG with the Form Runner: Clicking the link should take you to the question
   // TODO: Need to confirm the hash fragment points to an element on the page
