@@ -17,7 +17,7 @@ test('Flash messages for failed validation appear', withPage, async (t, page) =>
   await page.clickAndWait(config.submitButton)
 
   const flashErrorTitle = await page.getText('#error-summary-title')
-  t.is(flashErrorTitle, 'There was a problem on the page', 'Flash message has the correct error title')
+  t.is(flashErrorTitle, 'There is a problem', 'Flash message has the correct error title')
 
   const errorLinks = await page.$$('.govuk-error-summary__list a')
   t.is(errorLinks.length, 1, 'There is only one error message')
