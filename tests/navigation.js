@@ -10,11 +10,15 @@ test('Navigating backwards after navigating forwards', withPage, async (t, page)
   t.is(await page.url(), config.formURL, 'Clicking back takes you to the main form homepage')
 })
 
-test('Navigating backwards when landing in the middle of a form', withPage, async (t, page) => {
+test('Landing on the check you answers page without answering all the questions', withPage, async (t, page) => {
   await page.goto(config.formURL)
   await page.goto(`${config.formURL}check-answers`)
-  await page.clickAndWait('.govuk-back-link')
-  t.is(await page.url(), `${config.formURL}confirm-your-email`, 'Goes back to the confirm your email page')
+  t.is(await page.getText('h1'), 'Do you want to continue?', 'It redirects to first unanswered question')
+})
+
+test('Navigating backwards when landing in the middle of a form', withPage, async (t, page) => {
+  await page.goto(config.formURL)
+  await page.goto(`${config.formURL}confirm-your-email`)
   await page.clickAndWait('.govuk-back-link')
   t.is(await page.url(), `${config.formURL}do-you-want-to-continue`, 'Goes back to the first question page')
   await page.clickAndWait('.govuk-back-link')
