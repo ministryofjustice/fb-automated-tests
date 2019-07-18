@@ -23,7 +23,7 @@ function getAttachment (id) {
 }
 
 function deleteMessages () {
-  return client.servers.update(serverID, {messages: 0})
+  return client.messages.deleteAll(serverID)
 }
 
 export {
