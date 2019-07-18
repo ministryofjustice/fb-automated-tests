@@ -6,7 +6,8 @@ import config from '../config'
 import {
   generateRandomEmailAddress,
   waitForEmail,
-  getAttachment
+  getAttachment,
+  deleteMessages
 } from '../utils/email-service'
 
 async function getPDFText (file) {
@@ -15,6 +16,11 @@ async function getPDFText (file) {
 }
 
 test('Full form completion including the email PDF', withPage, async (t, page) => {
+  try {
+    await deleteMessages()
+  } catch (e) {
+    console.log(e) // eslint-disable-line no-console
+  }
   const recipientEmail = generateRandomEmailAddress()
 
   await page.goto(config.formURL)

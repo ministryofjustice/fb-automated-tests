@@ -22,8 +22,13 @@ function getAttachment (id) {
   return client.files.getAttachment(id)
 }
 
+function deleteMessages () {
+  return client.servers.update(serverID, {messages: 0})
+}
+
 export {
   generateRandomEmailAddress,
   waitForEmail,
-  getAttachment
+  getAttachment,
+  deleteMessages
 }
