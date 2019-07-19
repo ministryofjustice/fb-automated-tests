@@ -18,7 +18,7 @@ const settings = {
     // https://developers.google.com/web/tools/puppeteer/troubleshooting
     '--no-sandbox',
     '--disable-setuid-sandbox',
-    // '--headless',
+    '--headless',
     '--disable-gpu',
     '--disable-dev-shm-usage'
   ]
