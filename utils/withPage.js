@@ -17,7 +17,10 @@ const settings = {
   chromeFlags: [
     // https://developers.google.com/web/tools/puppeteer/troubleshooting
     '--no-sandbox',
-    '--disable-setuid-sandbox'
+    '--disable-setuid-sandbox',
+    // '--headless',
+    '--disable-gpu',
+    '--disable-dev-shm-usage'
   ]
 }
 
