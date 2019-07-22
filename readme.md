@@ -29,12 +29,34 @@ npm run test:ci
 npm test
 ```
 
+#### Using a local instance of the form 
+
+By default, the tests will be run against the form in the `test-dev` environment
+
+https://automated-testing.dev.integration.form.service.justice.gov.uk
+
+but this can be overridden by setting
+
+* FORM_URL (must end with trailing slash)
+
+eg.
+
+```sh
+FORM_URL='http://localhost:3000/'
+```
+
+NB. unless the form instance you provide can handle the submission, you will probably want to disable email testing
+
 #### Setting up environment variables for the email testing service
 
 Rename `.env.sample` to `.env` and fill in the [mailosaur](https://mailosaur.com/) secrets accordingly. On CircleCI, these secrets have been entered as environment variables [through the app](https://circleci.com/gh/ministryofjustice/fb-automated-tests/edit#env-vars)
 
 * `EMAIL_SERVICE_API_KEY` is the API key which you can get from the dashboard
 * `EMAIL_SERVICE_SERVER_ID` is the mailbox server ID which you can get from the dashboard
+
+If these values are not provided, the tests will skip the email checking - it is also possible to disable the email checks explicitly by setting
+
+* `SKIP_EMAIL`
 
 ### Writing a new test
 

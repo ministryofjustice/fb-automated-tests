@@ -9,6 +9,7 @@ import {
 
 const args = process.argv.slice(2)
 
+// consider enabling --headless if random errors still occur
 const settings = {
   shouldTakeScreenshots: args.includes('--screenshots'),
   shouldDumpTrace: args.includes('--trace'),
@@ -18,7 +19,6 @@ const settings = {
     // https://developers.google.com/web/tools/puppeteer/troubleshooting
     '--no-sandbox',
     '--disable-setuid-sandbox',
-    // '--headless',
     '--disable-gpu',
     '--disable-dev-shm-usage'
   ]
