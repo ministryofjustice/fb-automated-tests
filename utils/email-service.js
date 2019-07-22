@@ -1,10 +1,9 @@
 import MailosaurClient from 'mailosaur'
-import dotenv from 'dotenv'
 
-dotenv.config()
+import config from '../config'
 
-const APIKey = process.env.EMAIL_SERVICE_API_KEY
-const serverID = process.env.EMAIL_SERVICE_SERVER_ID
+const APIKey = config.emailAPIKey
+const serverID = config.emailServerId
 
 const client = new MailosaurClient(APIKey)
 

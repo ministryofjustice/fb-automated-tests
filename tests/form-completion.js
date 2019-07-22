@@ -16,11 +16,13 @@ async function getPDFText (file) {
 }
 
 test('Full form completion including the email PDF', withPage, async (t, page) => {
-  try {
-    await deleteMessages()
-    console.log('Deleted existing messages in server mailbox') // eslint-disable-line no-console
-  } catch (e) {
-    console.log('Failed to delete existing messages in server mailbox', e) // eslint-disable-line no-console
+  if (!config.skipEmail) {
+    try {
+      await deleteMessages()
+      console.log('Deleted existing messages in server mailbox') // eslint-disable-line no-console
+    } catch (e) {
+      console.log('Failed to delete existing messages in server mailbox', e) // eslint-disable-line no-console
+    }
   }
   const recipientEmail = generateRandomEmailAddress()
 
@@ -40,6 +42,7 @@ test('Full form completion including the email PDF', withPage, async (t, page) =
   await page.clickAndWait(config.submitButton)
 
   t.is(await page.getText('h1'), 'Check your answers', 'Check your answers page has the correct heading')
+  t.is(await page.getText('.govuk-summary-list__value'), 'Yes - I want to continue', 'It has the correct first answer')
   t.is(await page.getText(config.submitButton), 'Accept and send application', 'The submit button has the correct test')
   await page.clickAndWait(config.submitButton)
 
@@ -47,39 +50,41 @@ test('Full form completion including the email PDF', withPage, async (t, page) =
 
   t.is(await page.$(config.submitButton), null, 'There is no submit button on the final exit page')
 
-  const pause = (secs) => {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        console.log(`Pausing for ${secs} secs`) // eslint-disable-line no-console
-        resolve()
-      }, 1000 * secs)
-    })
+  if (!config.skipEmail) {
+    const pause = (secs) => {
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          console.log(`Pausing for ${secs} secs`) // eslint-disable-line no-console
+          resolve()
+        }, 1000 * secs)
+      })
+    }
+
+    await pause(30)
+
+    console.log(`Checking for email (${(new Date()).toString()}) sent to ${recipientEmail}`) // eslint-disable-line no-console
+    let result = await waitForEmail(recipientEmail)
+
+    const {
+      attachments,
+      from: [{
+        email: fromEmail
+      }],
+      to: [{
+        email: toEmail
+      }]
+    } = result
+
+    const [attachment] = attachments
+    const attachmentFile = await getAttachment(attachment.id)
+    const PDFText = await getPDFText(attachmentFile)
+
+    t.is(fromEmail, 'form-builder@digital.justice.gov.uk', 'From email address is correct')
+    t.is(toEmail, recipientEmail, 'To email address is correct')
+    t.is(attachments.length, 1, 'These is only one single attachment')
+    t.is(attachment.contentType, 'application/pdf', 'attachment is a PDF type')
+    t.true(PDFText.includes(recipientEmail), 'PDF includes the user email address')
+    t.true(PDFText.includes('file-upload-sample.png (687.9KB)'), 'PDF includes a mention of the uploaded file')
+    t.true(PDFText.includes('Yes - I want to continue'), 'PDF inlcudes the answer to a question')
   }
-
-  await pause(30)
-
-  console.log(`Checking for email (${(new Date()).toString()}) sent to ${recipientEmail}`) // eslint-disable-line no-console
-  let result = await waitForEmail(recipientEmail)
-
-  const {
-    attachments,
-    from: [{
-      email: fromEmail
-    }],
-    to: [{
-      email: toEmail
-    }]
-  } = result
-
-  const [attachment] = attachments
-  const attachmentFile = await getAttachment(attachment.id)
-  const PDFText = await getPDFText(attachmentFile)
-
-  t.is(fromEmail, 'form-builder@digital.justice.gov.uk', 'From email address is correct')
-  t.is(toEmail, recipientEmail, 'To email address is correct')
-  t.is(attachments.length, 1, 'These is only one single attachment')
-  t.is(attachment.contentType, 'application/pdf', 'attachment is a PDF type')
-  t.true(PDFText.includes(recipientEmail), 'PDF includes the user email address')
-  t.true(PDFText.includes('file-upload-sample.png (687.9KB)'), 'PDF includes a mention of the uploaded file')
-  t.true(PDFText.includes('Yes - I want to continue'), 'PDF inlcudes the answer to a question')
 })

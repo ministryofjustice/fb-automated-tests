@@ -57,5 +57,5 @@ test('Correctly answering a question removes an existing error message', withPag
   await page.click('#auto_name_1-0')
   await page.clickAndWait(config.submitButton)
   t.is(await page.$('#error-summary-title'), null)
-  t.is(await page.url(), 'https://automated-testing.dev.test.form.service.justice.gov.uk/some-questions', 'User is sent to the next question')
+  t.is(await page.url(), `${config.formURL}some-questions`, 'User is sent to the next question')
 })
