@@ -24,12 +24,14 @@ test('Flash messages for failed validation appear', withPage, async (t, page) =>
   const errorText = await page.getText('.govuk-error-summary__list a')
   t.is(errorText, 'Choose one of the answers for Do you want to continue?', 'The flash message explains the correct error')
 
-  t.is(await page.getHash(), '', 'There is no hash in the URL')
   await errorLinks[0].click()
-  t.is(await page.getHash(), '#auto_name_1-0', 'Clicking the error message adds the question ID to the URL hash')
-
-  // TODO: BUG with the Form Runner: Clicking the link should take you to the question
-  // TODO: Need to confirm the hash fragment points to an element on the page
+  // TODO: this test should confirm which element is focused
+  // but document.activeElement is returning an empty object
+  // async function activeElement (page) {
+  //   return page.evaluate(() => document.activeElement)
+  // }
+  // const active = await activeElement(page)
+  // t.is(active.id, 'auto_name_1-0')
 })
 
 test('Navigating back and forward and should clear the error message', withPage, async (t, page) => {
