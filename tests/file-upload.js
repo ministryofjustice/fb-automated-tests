@@ -11,10 +11,10 @@ test('File upload validation for a single file', withPage, async (t, page) => {
 
   t.truthy(await page.$('#error-summary-title'))
 
-  t.is(await page.getHash(), '', 'There is no hash in the URL')
   const errorLinks = await page.$$('.govuk-error-summary__list a')
   await errorLinks[0].click()
-  t.is(await page.getHash(), '#auto_name_2_1_', 'Clicking the error message adds the file input ID to the URL hash')
+  // TODO: add test to check for what element is focused
+  // See validation.js re: activeElement
 })
 
 test('File upload for multiple files', withPage, async (t, page) => {
