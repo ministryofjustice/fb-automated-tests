@@ -13,8 +13,7 @@ test('File upload validation for a single file', withPage, async (t, page) => {
 
   const errorLinks = await page.$$('.govuk-error-summary__list a')
   await errorLinks[0].click()
-  // TODO: add test to check for what element is focused
-  // See validation.js re: activeElement
+  t.is(await page.isActiveElement('#auto_name_2_1_'), true)
 })
 
 test('File upload for multiple files', withPage, async (t, page) => {

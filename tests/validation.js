@@ -25,13 +25,7 @@ test('Flash messages for failed validation appear', withPage, async (t, page) =>
   t.is(errorText, 'Choose one of the answers for Do you want to continue?', 'The flash message explains the correct error')
 
   await errorLinks[0].click()
-  // TODO: this test should confirm which element is focused
-  // but document.activeElement is returning an empty object
-  // async function activeElement (page) {
-  //   return page.evaluate(() => document.activeElement)
-  // }
-  // const active = await activeElement(page)
-  // t.is(active.id, 'auto_name_1-0')
+  t.is(await page.isActiveElement('#auto_name_1-0'), true)
 })
 
 test('Navigating back and forward and should clear the error message', withPage, async (t, page) => {
