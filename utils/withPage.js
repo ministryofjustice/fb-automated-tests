@@ -4,7 +4,8 @@ import trackHAR from './har'
 import {
   getText,
   clickAndWait,
-  getHash
+  getHash,
+  isActiveElement
 } from './extra-page-methods'
 
 const args = process.argv.slice(2)
@@ -34,6 +35,7 @@ async function withPage (t, run) {
   page.getText = selector => getText(page, selector)
   page.clickAndWait = selector => clickAndWait(page, selector)
   page.getHash = () => getHash(page)
+  page.isActiveElement = selector => isActiveElement(page, selector)
 
   let writeHAR
 

@@ -18,8 +18,18 @@ function getHash (page) {
   return page.evaluate(() => window.location.hash)
 }
 
+async function isActiveElement (page, selector) {
+  const result = page.evaluate((selector) => {
+    const activeElement = window.document.activeElement
+    const selectorElement = window.document.querySelector(selector)
+    return activeElement === selectorElement
+  }, selector)
+  return result
+}
+
 export {
   getText,
   clickAndWait,
-  getHash
+  getHash,
+  isActiveElement
 }
