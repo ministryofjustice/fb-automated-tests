@@ -14,3 +14,17 @@ test(
     )
   }
 )
+
+test(
+  'User can enter email address to recover saved form',
+  withPage,
+  async (t, page) => {
+    await page.goto(config.formURL)
+    await page.clickAndWait('a[href=\'/return\']')
+    t.is(
+      await page.getText('h1'),
+      'Get a sign-in link',
+      'The user is asked for their email address'
+    )
+  }
+)
