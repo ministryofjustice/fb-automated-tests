@@ -5,7 +5,8 @@
   "description": "End to end tests for a Form Builder form",
   "scripts": {
     "lint": "eslint .",
-    "test": "npm run lint && ava --reset-cache && ava -v",
+    "test": "ava --reset-cache && ava -v",
+    "lint:test": "npm run lint && ava --reset-cache && ava -v",
     "test:ci": "rm -rf test-results && mkdir -p test-results/traces && mkdir -p test-results/har && mkdir -p test-results/screenshots && node ./node_modules/.bin/ava -v -- --screenshots"
   },
   "license": "ISC",

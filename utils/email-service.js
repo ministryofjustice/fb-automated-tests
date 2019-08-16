@@ -14,7 +14,8 @@ function waitForEmail (recipientEmail) {
 }
 
 function generateRandomEmailAddress () {
-  return client.servers.generateEmailAddress(serverID)
+  return 'nuttyone.grsdrypq@mailosaur.io'
+  // return client.servers.generateEmailAddress(serverID)
 }
 
 function getAttachment (id) {
