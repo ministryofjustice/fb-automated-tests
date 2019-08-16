@@ -13,9 +13,8 @@ function waitForEmail (recipientEmail) {
   })
 }
 
-function generateRandomEmailAddress () {
-  return 'nuttyone.grsdrypq@mailosaur.io'
-  // return client.servers.generateEmailAddress(serverID)
+function generateEmailAddress (subdomain="xyz") {
+  return `${subdomain}.${process.env.EMAIL_SERVICE_SERVER_ID}@mailosaur.io`
 }
 
 function getAttachment (id) {
@@ -27,7 +26,7 @@ function deleteMessages () {
 }
 
 export {
-  generateRandomEmailAddress,
+  generateEmailAddress,
   waitForEmail,
   getAttachment,
   deleteMessages

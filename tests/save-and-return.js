@@ -2,7 +2,7 @@ import test from 'ava'
 import withPage from '../utils/withPage'
 import config from '../config'
 import {
-  generateRandomEmailAddress,
+  generateEmailAddress,
   waitForEmail,
   getAttachment,
   deleteMessages
@@ -36,18 +36,67 @@ test(
 )
 
 test(
-  'User gets confirmation that email is sent',
+  'User sees confirmation that email is sent',
   withPage,
   async (t, page) => {
     await page.goto(config.formURL)
     await page.clickAndWait('a[href=\'/return\']')
 
-    const recipientEmail = generateRandomEmailAddress()
+    const recipientEmail = generateEmailAddress()
     const emailInputSelector = '[id="return_start_email"]'
     await page.type(emailInputSelector, recipientEmail)
     await page.clickAndWait(config.submitButton)
     const confirmationText = await page.getText('p.govuk-body-l')
 
     t.truthy(confirmationText.includes(recipientEmail), 'User is notified of email')
+  }
+)
+
+test(
+  'User receives confirmation email',
+  withPage,
+  async (t, page) => {
+    await page.goto(config.formURL)
+    await page.clickAndWait('a[href=\'/return\']')
+
+    const recipientEmail = generateEmailAddress('save-and-return')
+    const emailInputSelector = '[id="return_start_email"]'
+    await page.type(emailInputSelector, recipientEmail)
+    await page.clickAndWait(config.submitButton)
+
+    if (!config.skipEmail) {
+      const pause = (secs) => {
+        return new Promise((resolve, reject) => {
+          setTimeout(() => {
+            console.log(`Pausing for ${secs} secs`) // eslint-disable-line no-console
+            resolve()
+          }, 1000 * secs)
+        })
+      }
+
+      await pause(30)
+
+      console.log(`Checking for email (${(new Date()).toString()}) sent to ${recipientEmail}`) // eslint-disable-line no-console
+      try {
+        const result = await waitForEmail(recipientEmail)
+
+        const {
+          subject,
+          from: [{
+            email: fromEmail
+          }],
+          to: [{
+            email: toEmail
+          }]
+        } = result
+
+        t.truthy(subject.includes('Your sign-in link'), 'Email has correct body')
+        t.is(fromEmail, 'formbuilder@notifications.service.gov.uk', 'From email address is correct')
+        t.is(toEmail, recipientEmail, 'To email address is correct')
+
+      } catch(error) {
+        t.fail(`Email not received, with error: ${error.message}`)
+      }
+    }
   }
 )
