@@ -22,6 +22,21 @@ test(
 )
 
 test(
+  'User can save progress',
+  withPage,
+  async (t, page) => {
+    await page.goto(config.formURL)
+    await page.clickAndWait(config.submitButton)
+    await page.clickAndWait('button[nane=setupReturn]')
+    t.is(
+      await page.getText('h1'),
+      'Saving your progress',
+      'The user is shown the save and return start page'
+    )
+  }
+)
+
+test(
   'User can enter email address to recover saved form',
   withPage,
   async (t, page) => {
