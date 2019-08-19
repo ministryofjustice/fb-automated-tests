@@ -8,18 +8,10 @@ import {
   deleteMessages
 } from '../utils/email-service'
 
-test(
-  'Save & return button is displayed to the user',
-  withPage,
-  async (t, page) => {
-    await page.goto(config.formURL)
-    t.is(
-      await page.getText('a[href=\'/return\']'),
-      'Continue work on a saved form',
-      'The link to continue work on a saved form is present'
-    )
-  }
-)
+async function visitRecoverFormPage(page) {
+  await page.goto(config.formURL)
+  await page.clickAndWait(config.recoverSavedForm)
+}
 
 test(
   'User can save progress',
@@ -27,7 +19,7 @@ test(
   async (t, page) => {
     await page.goto(config.formURL)
     await page.clickAndWait(config.submitButton)
-    await page.clickAndWait('button[nane=setupReturn]')
+    await page.clickAndWait(config.saveAndComeBackLater)
     t.is(
       await page.getText('h1'),
       'Saving your progress',
@@ -40,8 +32,7 @@ test(
   'User can enter email address to recover saved form',
   withPage,
   async (t, page) => {
-    await page.goto(config.formURL)
-    await page.clickAndWait('a[href=\'/return\']')
+    await visitRecoverFormPage(page)
     t.is(
       await page.getText('h1'),
       'Get a sign-in link',
@@ -51,15 +42,14 @@ test(
 )
 
 test(
-  'User sees confirmation that email is sent',
+  'User enters email address to recover saved form',
   withPage,
   async (t, page) => {
-    await page.goto(config.formURL)
-    await page.clickAndWait('a[href=\'/return\']')
-
     const recipientEmail = generateEmailAddress()
-    const emailInputSelector = '[id="return_start_email"]'
-    await page.type(emailInputSelector, recipientEmail)
+
+    await visitRecoverFormPage(page)
+
+    await page.type(config.enterEmailToRecoverForm, recipientEmail)
     await page.clickAndWait(config.submitButton)
     const confirmationText = await page.getText('p.govuk-body-l')
 
@@ -68,15 +58,14 @@ test(
 )
 
 test(
-  'User receives confirmation email',
+  'User receives form recovery email',
   withPage,
   async (t, page) => {
-    await page.goto(config.formURL)
-    await page.clickAndWait('a[href=\'/return\']')
-
     const recipientEmail = generateEmailAddress('save-and-return')
-    const emailInputSelector = '[id="return_start_email"]'
-    await page.type(emailInputSelector, recipientEmail)
+
+    await visitRecoverFormPage(page)
+
+    await page.type(config.enterEmailToRecoverForm, recipientEmail)
     await page.clickAndWait(config.submitButton)
 
     if (!config.skipEmail) {
