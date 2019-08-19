@@ -25,9 +25,19 @@ function deleteMessages () {
   return client.messages.deleteAll(serverID)
 }
 
+const pause = (secs) => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      console.log(`Pausing for ${secs} secs`) // eslint-disable-line no-console
+      resolve()
+    }, 1000 * secs)
+  })
+}
+
 export {
   generateEmailAddress,
   waitForEmail,
   getAttachment,
-  deleteMessages
+  deleteMessages,
+  pause
 }
