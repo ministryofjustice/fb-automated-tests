@@ -13,7 +13,7 @@ function waitForEmail (recipientEmail) {
   })
 }
 
-function generateEmailAddress (subdomain="xyz") {
+function generateEmailAddress (subdomain = 'xyz') {
   return `${subdomain}.${process.env.EMAIL_SERVICE_SERVER_ID}@mailosaur.io`
 }
 

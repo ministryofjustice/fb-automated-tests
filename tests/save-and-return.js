@@ -4,12 +4,10 @@ import config from '../config'
 import {
   generateEmailAddress,
   waitForEmail,
-  getAttachment,
-  deleteMessages,
   pause
 } from '../utils/email-service'
 
-async function visitRecoverFormPage(page) {
+async function visitRecoverFormPage (page) {
   await page.goto(config.formURL)
   await page.clickAndWait(config.recoverSavedForm)
 }
@@ -70,8 +68,7 @@ test(
         t.truthy(subject.includes('Your sign-in link'), 'Email has correct body')
         t.is(fromEmail, 'formbuilder@notifications.service.gov.uk', 'From email address is correct')
         t.is(toEmail, recipientEmail, 'To email address is correct')
-
-      } catch(error) {
+      } catch (error) {
         t.fail(`Email not received, with error: ${error.message}`)
       }
     }
@@ -138,8 +135,7 @@ test(
         t.truthy(subject.includes('Your sign-in link'), 'Email has correct body')
         t.is(fromEmail, 'formbuilder@notifications.service.gov.uk', 'From email address is correct')
         t.is(toEmail, recipientEmail, 'To email address is correct')
-
-      } catch(error) {
+      } catch (error) {
         t.fail(`Email not received, with error: ${error.message}`)
       }
     }
