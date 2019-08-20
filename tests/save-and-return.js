@@ -67,12 +67,12 @@ async function recoverSavedAnswers (page, t, recipientEmail) {
   t.truthy(signedInText.includes(recipientEmail), 'User is signed in')
 }
 
-test(
+const recipientEmail = generateEmailAddress('save-form')
+
+test.serial(
   'User saves progress and confirms email',
   withPage,
   async (t, page) => {
-    const recipientEmail = generateEmailAddress('save-form')
-
     // Start form and complete first answer
     await startForm(page)
 
@@ -98,27 +98,10 @@ test(
   }
 )
 
-test(
+test.serial(
   'User returns to previously saved form',
   withPage,
   async (t, page) => {
-    const recipientEmail = generateEmailAddress('recover-saved-form')
-
-    // Start form and complete first answer
-    await startForm(page)
-
-    // Click save for later
-    await saveProgress(page, recipientEmail)
-
-    // Receive confirmation email
-    const confirmationEmail = await checkForRecievedEmail(t, recipientEmail)
-
-    // Click on confirmation link from email
-    await page.goto(confirmationEmail.confirmationLink.href)
-
-    // Click sign out link
-    await page.clickAndWait(config.signOutFromForm)
-
     // go to form start page
     await page.goto(config.formURL)
 
