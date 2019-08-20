@@ -26,9 +26,9 @@ function deleteMessages () {
 }
 
 const pause = (secs) => {
+  console.log(`Pausing for ${secs} secs`) // eslint-disable-line no-console
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      console.log(`Pausing for ${secs} secs`) // eslint-disable-line no-console
       resolve()
     }, 1000 * secs)
   })

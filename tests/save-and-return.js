@@ -4,6 +4,7 @@ import config from '../config'
 import {
   generateEmailAddress,
   waitForEmail,
+  deleteMessages,
   pause
 } from '../utils/email-service'
 
@@ -24,10 +25,10 @@ async function saveProgress (page, recipientEmail) {
   await page.clickAndWait(config.submitButton)
 }
 
-async function checkForRecievedEmail(page, t, recipientEmail) {
+async function checkForRecievedEmail(t, recipientEmail) {
   if (!config.skipEmail) {
     console.log(`Checking for email (${(new Date()).toString()}) sent to ${recipientEmail}`) // eslint-disable-line no-console
-    await pause(30)
+    await pause(10)
 
     try {
       const result = await waitForEmail(recipientEmail)
@@ -45,16 +46,11 @@ async function checkForRecievedEmail(page, t, recipientEmail) {
         }
       } = result
 
-      // Ensure we have got the right email
-      t.truthy(subject.includes('Confirm your email address'), 'Email has correct subject')
-      t.is(fromEmail, 'formbuilder@notifications.service.gov.uk', 'From email address is correct')
-      t.is(toEmail, recipientEmail, 'To email address is correct')
+      await deleteMessages()
 
-      const confirmationLink = links.find( link => {
-        return link.text === 'Confirm your email address';
-      });
+      const confirmationLink = links.pop()
 
-      return confirmationLink
+      return { subject, fromEmail, toEmail, confirmationLink }
 
     } catch (error) {
       t.fail(`Email not received, with error: ${error.message}`)
@@ -84,10 +80,15 @@ test(
     await saveProgress(page, recipientEmail)
 
     // Receive confirmation email
-    const confirmationLink = await checkForRecievedEmail(page, t, recipientEmail)
+    const email = await checkForRecievedEmail(t, recipientEmail)
+
+    // Ensure we have got the right email
+    t.truthy(email.subject.includes('Confirm your email address'), 'Email has correct subject')
+    t.is(email.fromEmail, 'formbuilder@notifications.service.gov.uk', 'From email address is correct')
+    t.is(email.toEmail, recipientEmail, 'To email address is correct')
 
     // Click on confirmation link from email
-    await page.goto(confirmationLink.href)
+    await page.goto(email.confirmationLink.href)
 
     // Check that answers are saved
     await recoverSavedAnswers(page, t, recipientEmail)
@@ -98,7 +99,7 @@ test(
 )
 
 test(
-  'User returns to previously aved form',
+  'User returns to previously saved form',
   withPage,
   async (t, page) => {
     const recipientEmail = generateEmailAddress('recover-saved-form')
@@ -110,13 +111,10 @@ test(
     await saveProgress(page, recipientEmail)
 
     // Receive confirmation email
-    const confirmationLink = await checkForRecievedEmail(page, t, recipientEmail)
+    const confirmationEmail = await checkForRecievedEmail(t, recipientEmail)
 
     // Click on confirmation link from email
-    await page.goto(confirmationLink.href)
-
-    // Check that answers are saved
-    await recoverSavedAnswers(page, t, recipientEmail)
+    await page.goto(confirmationEmail.confirmationLink.href)
 
     // Click sign out link
     await page.clickAndWait(config.signOutFromForm)
@@ -131,43 +129,17 @@ test(
     await page.type(config.enterEmailToRecoverForm, recipientEmail)
     await page.clickAndWait(config.submitButton)
 
-    let magicConfirmationLink
-    // check email
-    if (!config.skipEmail) {
-      console.log(`Checking for email (${(new Date()).toString()}) sent to ${recipientEmail}`) // eslint-disable-line no-console
-      await pause(30)
+    // Receive confirmation email
+    const recoveryEmail = await checkForRecievedEmail(t, recipientEmail)
 
-      try {
-        const result = await waitForEmail(recipientEmail)
+    // Ensure we have got the right email
+    t.truthy(recoveryEmail.subject.includes('Your sign-in link'), 'Email has correct subject')
+    t.is(recoveryEmail.fromEmail, 'formbuilder@notifications.service.gov.uk', 'From email address is correct')
+    t.is(recoveryEmail.toEmail, recipientEmail, 'To email address is correct')
 
-        const {
-          subject,
-          from: [{
-            email: fromEmail
-          }],
-          to: [{
-            email: toEmail
-          }],
-          html: {
-            links: links
-          }
-        } = result
+    await page.goto(recoveryEmail.confirmationLink.href)
 
-        // Ensure we have got the right email
-        t.truthy(subject.includes('Your sign-in link'), 'Email has correct subject')
-        t.is(fromEmail, 'formbuilder@notifications.service.gov.uk', 'From email address is correct')
-        t.is(toEmail, recipientEmail, 'To email address is correct')
+    await recoverSavedAnswers(page, t, recipientEmail)
 
-        magicConfirmationLink = links.pop()
-
-
-      } catch (error) {
-        t.fail(`Email not received, with error: ${error.message}`)
-      }
-
-      await page.goto(magicConfirmationLink.href)
-
-      await recoverSavedAnswers(page, t, recipientEmail)
-    }
   }
 )
