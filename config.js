@@ -15,6 +15,7 @@ const config = {
   submitButton: 'button[type="submit"]:not([name])',
   saveAndComeBackLater: 'button[name="setupReturn"]',
   recoverSavedForm: 'a[href=\'/return\']',
+  signOutFromForm: 'a[href=\'/return/signout\']',
   enterEmailToRecoverForm: '[id="return_start_email"]',
   enterEmailToSaveForm: '[id="return_setup_email_address"]',
   formURL: FORM_URL || 'https://automated-testing.dev.test.form.service.justice.gov.uk/',
