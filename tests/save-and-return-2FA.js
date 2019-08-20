@@ -12,26 +12,25 @@ async function visitRecoverFormPage (page) {
   await page.clickAndWait(config.recoverSavedForm)
 }
 
-test(
-  'User sees the "save your progress" link',
-  withPage,
-  async (t, page) => {
-    await page.goto(config.formURL)
-    await page.clickAndWait(config.submitButton)
-    await page.clickAndWait(config.saveAndComeBackLater)
-    t.is(
-      await page.getText('h1'),
-      'Saving your progress',
-      'The user is shown the save and return start page'
-    )
-  }
-)
+
+// TODO:
+// - user sets up 2FA
+// - user uses 2FA to recover a form
 
 test(
-  'User saves progress',
+  'User saves progress and enables 2FA',
   withPage,
   async (t, page) => {
-    const recipientEmail = generateEmailAddress('save-form')
+
+    // Process:
+    // 1. Visit form and answer a question
+    // 2. Save for later
+    // 3. Confirm email address from link.
+    // 4. Add 2fa phone numnber
+    // 5. Receive SMS, enter code from SMS
+    // 6. See 2fa confirmation screen
+
+    const recipientEmail = generateEmailAddress('leancookie')
 
     // Start form and complete first answer
     await page.goto(config.formURL)
@@ -45,8 +44,20 @@ test(
 
     // Enter email address
     await page.type(config.enterEmailToSaveForm, recipientEmail)
+
+    t.is(
+      await page.getText('h1'),
+      'Save your progress',
+      'The user is shown the save and return start page'
+    )
+
     await page.clickAndWait(config.submitButton)
 
+    t.is(
+      await page.getText('h1'),
+      'Check your email',
+      'The user is shown the save and return start page'
+    )
     // Receive confirmation email
     if (!config.skipEmail) {
       await pause(30)
@@ -65,6 +76,7 @@ test(
           }]
         } = result
 
+        console.log(result)
         t.truthy(subject.includes('Your sign-in link'), 'Email has correct body')
         t.is(fromEmail, 'formbuilder@notifications.service.gov.uk', 'From email address is correct')
         t.is(toEmail, recipientEmail, 'To email address is correct')
@@ -76,36 +88,7 @@ test(
 )
 
 test(
-  'User can enter email address to recover saved form',
-  withPage,
-  async (t, page) => {
-    await visitRecoverFormPage(page)
-    t.is(
-      await page.getText('h1'),
-      'Get a sign-in link',
-      'The user is asked for their email address'
-    )
-  }
-)
-
-test(
-  'User enters email address to recover saved form',
-  withPage,
-  async (t, page) => {
-    const recipientEmail = generateEmailAddress('recover-saved-form')
-
-    await visitRecoverFormPage(page)
-
-    await page.type(config.enterEmailToRecoverForm, recipientEmail)
-    await page.clickAndWait(config.submitButton)
-    const confirmationText = await page.getText('p.govuk-body-l')
-
-    t.truthy(confirmationText.includes(recipientEmail), 'User is notified of email')
-  }
-)
-
-test(
-  'User receives form recovery email',
+  'User recovers form with 2FA',
   withPage,
   async (t, page) => {
     const recipientEmail = generateEmailAddress('recover-saved-form')
@@ -141,9 +124,3 @@ test(
     }
   }
 )
-
-// TODO:
-// - User clicks on link to recover form
-// - User us signed in and correct form is recovered
-// - user sets up 2FA
-// - user uses 2FA to recover a form
