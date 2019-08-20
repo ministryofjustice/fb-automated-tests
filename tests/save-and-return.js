@@ -25,7 +25,7 @@ async function saveProgress (page, recipientEmail) {
   await page.clickAndWait(config.submitButton)
 }
 
-async function checkForRecievedEmail(t, recipientEmail) {
+async function checkForRecievedEmail (t, recipientEmail) {
   if (!config.skipEmail) {
     console.log(`Checking for email (${(new Date()).toString()}) sent to ${recipientEmail}`) // eslint-disable-line no-console
     await pause(10)
@@ -42,16 +42,13 @@ async function checkForRecievedEmail(t, recipientEmail) {
           email: toEmail
         }],
         html: {
-          links: links
+          links: links // eslint-disable-line no-useless-rename
         }
       } = result
 
       await deleteMessages()
-
       const confirmationLink = links.pop()
-
-      return { subject, fromEmail, toEmail, confirmationLink }
-
+      return {subject, fromEmail, toEmail, confirmationLink}
     } catch (error) {
       t.fail(`Email not received, with error: ${error.message}`)
     }
@@ -123,6 +120,5 @@ test.serial(
     await page.goto(recoveryEmail.confirmationLink.href)
 
     await recoverSavedAnswers(page, t, recipientEmail)
-
   }
 )
