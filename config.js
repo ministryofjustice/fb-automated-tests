@@ -11,6 +11,7 @@ const {
 const skipEmail = !EMAIL_SERVICE_API_KEY || process.env.SKIP_EMAIL
 
 const config = {
+  continueWithSavedForm: 'a[href="/do-you-want-to-continue"]',
   submitButton: 'button[type="submit"]:not([name])',
   saveAndComeBackLater: 'button[name="setupReturn"]',
   recoverSavedForm: 'a[href=\'/return\']',
