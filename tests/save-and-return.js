@@ -42,7 +42,7 @@ async function checkForRecievedEmail (t, recipientEmail) {
           email: toEmail
         }],
         html: {
-          links: links // eslint-disable-line no-useless-rename
+          links
         }
       } = result
 
