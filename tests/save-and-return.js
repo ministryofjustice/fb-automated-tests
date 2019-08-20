@@ -134,7 +134,7 @@ test(
 
         t.truthy(subject.includes('Your sign-in link'), 'Email has correct body')
         t.is(fromEmail, 'formbuilder@notifications.service.gov.uk', 'From email address is correct')
-        t.is(toEmail, recipientEmail, 'To email address is correct')
+        t.is(toEmail, recipientEmail, 'The to email address is correct')
       } catch (error) {
         t.fail(`Email not received, with error: ${error.message}`)
       }
