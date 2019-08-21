@@ -125,7 +125,7 @@ test(
     await page.type(config.enter2faCode, signInCode)
     await page.clickAndWait(config.submitButton)
 
-    // Confirm we have retrieved the correct answers
+    // Confirm we retrieved the correct answers
     await assertSavedAnswers(page, t, recipientEmail)
   }
 )
