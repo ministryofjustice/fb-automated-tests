@@ -18,7 +18,7 @@ const config = {
   signOutFromForm: 'a[href=\'/return/signout\']',
   enterEmailToRecoverForm: '[id="return_start_email"]',
   enterEmailToSaveForm: '[id="return_setup_email_address"]',
-  formURL: FORM_URL || 'https://automated-testing.dev.test.form.service.justice.gov.uk/',
+  formURL: FORM_URL || 'https://automated-testing.dev.integration.form.service.justice.gov.uk/',
   formTitle: 'A form for testing',
   emailAPIKey: EMAIL_SERVICE_API_KEY,
   emailServerId: EMAIL_SERVICE_SERVER_ID,
