@@ -7,7 +7,7 @@
     "lint": "eslint .",
     "test": "ava --reset-cache && ava -v -s",
     "lint:test": "npm run lint && npm run test",
-    "test:ci": "rm -rf test-results && mkdir -p test-results/traces && mkdir -p test-results/har && mkdir -p test-results/screenshots && node ./node_modules/.bin/ava -v -- --screenshots"
+    "test:ci": "rm -rf test-results && mkdir -p test-results/traces && mkdir -p test-results/har && mkdir -p test-results/screenshots && node ./node_modules/.bin/ava -v -s -- --screenshots"
   },
   "license": "ISC",
   "dependencies": {
