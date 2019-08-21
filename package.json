@@ -18,7 +18,8 @@
     "esm": "^3.2.25",
     "mailosaur": "^5.0.8",
     "pdf-parse": "^1.1.1",
-    "puppeteer": "^1.18.0"
+    "puppeteer": "^1.18.0",
+    "twilio": "^3.33.3"
   },
   "ava": {
     "require": [
