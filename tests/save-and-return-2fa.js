@@ -7,6 +7,7 @@ import {
   deleteMessages,
   pause
 } from '../utils/email-service'
+import {NotifyClient} from 'notifications-node-client'
 
 async function startForm (page) {
   await page.goto(config.formURL)
@@ -16,11 +17,11 @@ async function startForm (page) {
 }
 
 async function saveProgress (page, recipientEmail) {
+  // Choose to save and come back later
   await page.clickAndWait(config.saveAndComeBackLater)
-
   await page.clickAndWait(config.submitButton)
 
-  // User Enters email address
+  // Enter email address to retrieve answers in the future
   await page.type(config.enterEmailToSaveForm, recipientEmail)
   await page.clickAndWait(config.submitButton)
 }
@@ -32,7 +33,6 @@ async function checkForRecievedEmail (t, recipientEmail) {
 
     try {
       const result = await waitForEmail(recipientEmail)
-
       const {
         subject,
         from: [{
@@ -71,9 +71,7 @@ async function enable2fa (page) {
 async function readCodeFromSMS (t) {
   console.log('Waiting for 2FA SMS to be received') // eslint-disable-line no-console
   await pause(15)
-  const NotifyClient = require('notifications-node-client').NotifyClient
   const notifyClient = new NotifyClient(config.notifyAPIKey)
-
   const latestSMS = await notifyClient
     .getReceivedTexts()
     .then((response) => { return response.body.received_text_messages.shift().content })
@@ -127,6 +125,7 @@ test(
     await page.type(config.enter2faCode, signInCode)
     await page.clickAndWait(config.submitButton)
 
+    // Confirm we have retrieved the correct answers
     await assertSavedAnswers(page, t, recipientEmail)
   }
 )
