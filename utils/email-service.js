@@ -13,8 +13,8 @@ function waitForEmail (recipientEmail) {
   })
 }
 
-function generateRandomEmailAddress () {
-  return client.servers.generateEmailAddress(serverID)
+function generateEmailAddress (subdomain = 'xyz') {
+  return `${subdomain}.${process.env.EMAIL_SERVICE_SERVER_ID}@mailosaur.io`
 }
 
 function getAttachment (id) {
@@ -25,9 +25,19 @@ function deleteMessages () {
   return client.messages.deleteAll(serverID)
 }
 
+const pause = (secs) => {
+  console.log(`Pausing for ${secs} secs`) // eslint-disable-line no-console
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve()
+    }, 1000 * secs)
+  })
+}
+
 export {
-  generateRandomEmailAddress,
+  generateEmailAddress,
   waitForEmail,
   getAttachment,
-  deleteMessages
+  deleteMessages,
+  pause
 }

@@ -4,7 +4,7 @@ import pdf from 'pdf-parse'
 import withPage from '../utils/withPage'
 import config from '../config'
 import {
-  generateRandomEmailAddress,
+  generateEmailAddress,
   waitForEmail,
   getAttachment,
   deleteMessages
@@ -24,7 +24,7 @@ test('Full form completion including the email PDF', withPage, async (t, page) =
       console.log('Failed to delete existing messages in server mailbox', e) // eslint-disable-line no-console
     }
   }
-  const recipientEmail = generateRandomEmailAddress()
+  const recipientEmail = generateEmailAddress()
 
   await page.goto(config.formURL)
   await page.clickAndWait(config.submitButton)
