@@ -31,11 +31,11 @@ async function withPage (t, run) {
     args: settings.chromeFlags
   })
 
-  t.includes = function(test_string, expected, message) {
-    if (test_string.includes(expected)) {
+  t.includes = function (testString, expected, message) {
+    if (testString.includes(expected)) {
       t.pass(message)
     } else {
-      t.fail(`\nExpected to include: "${expected}";\nGot: "${test_string}"`)
+      t.fail(`\nExpected to include: "${expected}";\nGot: "${testString}"`)
     }
   }
 

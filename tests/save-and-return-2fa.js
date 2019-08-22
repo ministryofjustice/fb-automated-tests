@@ -90,7 +90,7 @@ async function assertSavedAnswers (page, t, recipientEmail) {
 
   // Check that user is signed in
   const signedInText = await page.getText('#signedin')
-  t.includes(signedInText, recipientEmail, 'User is signed in')  
+  t.includes(signedInText, recipientEmail, 'User is signed in')
 }
 
 test(
