@@ -4,9 +4,7 @@ import config from '../config'
 import {
   checkForRecievedEmail,
   generateEmailAddress,
-  waitForEmail,
-  deleteMessages,
-  pause
+  deleteMessages
 } from '../utils/email-service'
 
 async function startForm (page) {

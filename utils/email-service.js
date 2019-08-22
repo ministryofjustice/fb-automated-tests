@@ -53,7 +53,6 @@ async function checkForRecievedEmail (t, recipientEmail) {
   }
 }
 
-
 const pause = (secs) => {
   console.log(`Pausing for ${secs} secs`) // eslint-disable-line no-console
   return new Promise((resolve, reject) => {

@@ -4,7 +4,6 @@ import config from '../config'
 import {
   checkForRecievedEmail,
   generateEmailAddress,
-  waitForEmail,
   deleteMessages,
   pause
 } from '../utils/email-service'
