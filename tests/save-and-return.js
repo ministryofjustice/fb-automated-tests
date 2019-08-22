@@ -2,6 +2,7 @@ import test from 'ava'
 import withPage from '../utils/withPage'
 import config from '../config'
 import {
+  checkForRecievedEmail,
   generateEmailAddress,
   waitForEmail,
   deleteMessages,
@@ -23,36 +24,6 @@ async function saveProgress (page, recipientEmail) {
   // User Enters email address
   await page.type(config.enterEmailToSaveForm, recipientEmail)
   await page.clickAndWait(config.submitButton)
-}
-
-async function checkForRecievedEmail (t, recipientEmail) {
-  if (!config.skipEmail) {
-    console.log(`Checking for email (${(new Date()).toString()}) sent to ${recipientEmail}`) // eslint-disable-line no-console
-    await pause(15)
-
-    try {
-      const result = await waitForEmail(recipientEmail)
-
-      const {
-        subject,
-        from: [{
-          email: fromEmail
-        }],
-        to: [{
-          email: toEmail
-        }],
-        html: {
-          links
-        }
-      } = result
-
-      await deleteMessages()
-      const confirmationLink = links.pop()
-      return {subject, fromEmail, toEmail, confirmationLink}
-    } catch (error) {
-      t.fail(`Email not received, with error: ${error.message}`)
-    }
-  }
 }
 
 async function recoverSavedAnswers (page, t, recipientEmail) {
@@ -78,6 +49,7 @@ test.serial(
 
     // Receive confirmation email
     const email = await checkForRecievedEmail(t, recipientEmail)
+    await deleteMessages()
 
     // Ensure we have got the right email
     t.includes(email.subject, 'Confirm your email address', 'Email has correct subject') // eslint-disable-line
@@ -111,9 +83,10 @@ test.serial(
 
     // Receive confirmation email
     const recoveryEmail = await checkForRecievedEmail(t, recipientEmail)
+    await deleteMessages()
 
     // Ensure we have got the right email
-    t.includes(recoveryEmail.subject, 'Your sign-in link', 'Email has correct subject') // eslint-disable-line 
+    t.includes(recoveryEmail.subject, 'Your sign-in link', 'Email has correct subject') // eslint-disable-line
     t.is(recoveryEmail.fromEmail, 'formbuilder@notifications.service.gov.uk', 'From email address is correct')
     t.is(recoveryEmail.toEmail, recipientEmail, 'To email address is correct')
 
