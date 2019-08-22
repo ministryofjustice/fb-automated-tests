@@ -61,7 +61,7 @@ async function recoverSavedAnswers (page, t, recipientEmail) {
 
   // Check that user is signed in
   const signedInText = await page.getText('#signedin')
-  t.truthy(signedInText.includes(recipientEmail), 'User is signed in')
+  t.includes(signedInText, recipientEmail, 'User is signed in')
 }
 
 const recipientEmail = generateEmailAddress('save-form')
@@ -80,7 +80,7 @@ test.serial(
     const email = await checkForRecievedEmail(t, recipientEmail)
 
     // Ensure we have got the right email
-    t.truthy(email.subject.includes('Confirm your email address'), 'Email has correct subject')
+    t.includes(email.subject, 'Confirm your email address', 'Email has correct subject') // eslint-disable-line
     t.is(email.fromEmail, 'formbuilder@notifications.service.gov.uk', 'From email address is correct')
     t.is(email.toEmail, recipientEmail, 'To email address is correct')
 
@@ -113,7 +113,7 @@ test.serial(
     const recoveryEmail = await checkForRecievedEmail(t, recipientEmail)
 
     // Ensure we have got the right email
-    t.truthy(recoveryEmail.subject.includes('Your sign-in link'), 'Email has correct subject')
+    t.includes(recoveryEmail.subject, 'Your sign-in link', 'Email has correct subject') // eslint-disable-line 
     t.is(recoveryEmail.fromEmail, 'formbuilder@notifications.service.gov.uk', 'From email address is correct')
     t.is(recoveryEmail.toEmail, recipientEmail, 'To email address is correct')
 
