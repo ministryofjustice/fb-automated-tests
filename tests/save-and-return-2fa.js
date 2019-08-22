@@ -2,8 +2,8 @@ import test from 'ava'
 import withPage from '../utils/withPage'
 import config from '../config'
 import {
+  checkForRecievedEmail,
   generateEmailAddress,
-  waitForEmail,
   deleteMessages,
   pause
 } from '../utils/email-service'
@@ -24,34 +24,6 @@ async function saveProgress (page, recipientEmail) {
   // Enter email address to retrieve answers in the future
   await page.type(config.enterEmailToSaveForm, recipientEmail)
   await page.clickAndWait(config.submitButton)
-}
-
-async function checkForRecievedEmail (t, recipientEmail) {
-  if (!config.skipEmail) {
-    console.log(`Checking for email (${(new Date()).toString()}) sent to ${recipientEmail}`) // eslint-disable-line no-console
-    await pause(15)
-
-    try {
-      const result = await waitForEmail(recipientEmail)
-      const {
-        subject,
-        from: [{
-          email: fromEmail
-        }],
-        to: [{
-          email: toEmail
-        }],
-        html: {
-          links
-        }
-      } = result
-
-      const confirmationLink = links.pop()
-      return {subject, fromEmail, toEmail, confirmationLink}
-    } catch (error) {
-      t.fail(`Email not received, with error: ${error.message}`)
-    }
-  }
 }
 
 async function assertCorrectEmail (email, recipientEmail, t) {
