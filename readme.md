@@ -29,7 +29,7 @@ npm run test:ci
 npm test
 ```
 
-#### Using a local instance of the form 
+#### Using a local instance of the form
 
 By default, the tests will be run against the form in the `test-dev` environment
 
@@ -49,14 +49,28 @@ NB. unless the form instance you provide can handle the submission, you will pro
 
 #### Setting up environment variables for the email testing service
 
-Rename `.env.sample` to `.env` and fill in the [mailosaur](https://mailosaur.com/) secrets accordingly. On CircleCI, these secrets have been entered as environment variables [through the app](https://circleci.com/gh/ministryofjustice/fb-automated-tests/edit#env-vars)
+Rename `.env.sample` to `.env` and fill in the [mailosaur](https://mailosaur.com/) secrets accordingly. On CircleCI, these secrets have been entered as environment variables [through the app](https://circleci.com/gh/ministryofjustice/fb-automated-tests/edit#env-vars). This also appies to the Notify number and API key
 
 * `EMAIL_SERVICE_API_KEY` is the API key which you can get from the dashboard
 * `EMAIL_SERVICE_SERVER_ID` is the mailbox server ID which you can get from the dashboard
+* `NOTIFY_API_KEY` is the API key for [Notify](https://www.notifications.service.gov.uk)
+* `NOTIFY_PHONE_NUMBER` is the receiving phone number assigned to us by [Notify](https://www.notifications.service.gov.uk)
 
 If these values are not provided, the tests will skip the email checking - it is also possible to disable the email checks explicitly by setting
 
 * `SKIP_EMAIL`
+
+### IMPORTANT: Mailosaur & Notify
+
+Annoyingly, we are only on a trial Mailosaur plan which expires after a month. When you create a new account,
+you must reset the `EMAIL_SERVICE_API_KEY` and `EMAIL_SERVICE_SERVER_ID`.
+
+This also effects [Notify](https://www.notifications.service.gov.uk) as our testing account requires any
+emails or phone numbers we wish to message to be whitelisted. When you create a new [mailosaur](https://mailosaur.com/)
+account, you must whitelist the new email address otherwise Notify will not send emails to it.
+
+You can see how email addresses are built in the [generateEmailAddress()](https://github.com/ministryofjustice/fb-automated-tests/blob/master/utils/email-service.js#L16) function.
+
 
 ### Writing a new test
 
