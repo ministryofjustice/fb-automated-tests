@@ -30,6 +30,15 @@ async function withPage (t, run) {
     headless: settings.headless,
     args: settings.chromeFlags
   })
+
+  t.includes = function(test_string, expected, message) {
+    if (test_string.includes(expected)) {
+      t.pass(message)
+    } else {
+      t.fail(`\nExpected to include: "${expected}";\nGot: "${test_string}"`)
+    }
+  }
+
   const page = await browser.newPage()
 
   page.getText = selector => getText(page, selector)
