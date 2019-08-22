@@ -55,7 +55,7 @@ async function checkForRecievedEmail (t, recipientEmail) {
 }
 
 async function assertCorrectEmail (email, recipientEmail, t) {
-  t.truthy(email.subject.includes('Confirm your email address'), 'Email has correct subject')
+  t.includes(email.subject, 'Confirm your email address', 'Email has correct subject')
   t.is(email.fromEmail, 'formbuilder@notifications.service.gov.uk', 'From email address is correct')
   t.is(email.toEmail, recipientEmail, 'To email address is correct')
 }
@@ -90,7 +90,7 @@ async function assertSavedAnswers (page, t, recipientEmail) {
 
   // Check that user is signed in
   const signedInText = await page.getText('#signedin')
-  t.truthy(signedInText.includes(recipientEmail), 'User is signed in')
+  t.includes(signedInText, recipientEmail, 'User is signed in')  
 }
 
 test(
