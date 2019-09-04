@@ -60,6 +60,14 @@ If these values are not provided, the tests will skip the email checking - it is
 
 * `SKIP_EMAIL`
 
+#### Skipping save and return functionality
+
+Save and return tests can be skipped by setting
+
+* `SKIP_SAVE_RETURN`
+
+If no values have been provided for the email testing setvices, the save and return tests will be skipped automatically.
+
 ### IMPORTANT: Mailosaur & Notify
 
 Annoyingly, we are only on a trial Mailosaur plan which expires after a month. When you create a new account,
