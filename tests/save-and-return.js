@@ -33,63 +33,71 @@ async function recoverSavedAnswers (page, t, recipientEmail) {
   t.includes(signedInText, recipientEmail, 'User is signed in')
 }
 
-const recipientEmail = generateEmailAddress('save-form')
+const {skipSaveReturn} = config
 
-test.serial(
-  'User saves progress and confirms email',
-  withPage,
-  async (t, page) => {
+if (skipSaveReturn) {
+  test('Skipping save and return tests', t => {
+    t.plan(0)
+  })
+} else {
+  const recipientEmail = generateEmailAddress('save-form')
+
+  test.serial(
+    'User saves progress and confirms email',
+    withPage,
+    async (t, page) => {
     // Start form and complete first answer
-    await startForm(page)
+      await startForm(page)
 
-    // Click save for later
-    await saveProgress(page, recipientEmail)
+      // Click save for later
+      await saveProgress(page, recipientEmail)
 
-    // Receive confirmation email
-    const email = await checkForRecievedEmail(t, recipientEmail)
-    await deleteMessages()
+      // Receive confirmation email
+      const email = await checkForRecievedEmail(t, recipientEmail)
+      await deleteMessages()
 
-    // Ensure we have got the right email
+      // Ensure we have got the right email
     t.includes(email.subject, 'Confirm your email address', 'Email has correct subject') // eslint-disable-line
-    t.is(email.fromEmail, 'formbuilder@notifications.service.gov.uk', 'From email address is correct')
-    t.is(email.toEmail, recipientEmail, 'To email address is correct')
+      t.is(email.fromEmail, 'formbuilder@notifications.service.gov.uk', 'From email address is correct')
+      t.is(email.toEmail, recipientEmail, 'To email address is correct')
 
-    // Click on confirmation link from email
-    await page.goto(email.confirmationLink.href)
+      // Click on confirmation link from email
+      await page.goto(email.confirmationLink.href)
 
-    // Check that answers are saved
-    await recoverSavedAnswers(page, t, recipientEmail)
+      // Check that answers are saved
+      await recoverSavedAnswers(page, t, recipientEmail)
 
-    // Click sign out link
-    await page.clickAndWait(config.signOutFromForm)
-  }
-)
+      // Click sign out link
+      await page.clickAndWait(config.signOutFromForm)
+    }
+  )
 
-test.serial(
-  'User returns to previously saved form',
-  withPage,
-  async (t, page) => {
+  test.serial(
+    'User returns to previously saved form',
+    withPage,
+    async (t, page) => {
     // go to form start page
-    await page.goto(config.formURL)
+      await page.goto(config.formURL)
 
-    // click on Continue work on a saved form
-    await page.clickAndWait(config.recoverSavedForm)
+      // click on Continue work on a saved form
+      await page.clickAndWait(config.recoverSavedForm)
 
-    // enter email
-    await page.type(config.enterEmailToRecoverForm, recipientEmail)
-    await page.clickAndWait(config.submitButton)
+      // enter email
+      await page.type(config.enterEmailToRecoverForm, recipientEmail)
+      await page.clickAndWait(config.submitButton)
 
-    // Receive confirmation email
-    const recoveryEmail = await checkForRecievedEmail(t, recipientEmail)
-    await deleteMessages()
+      // Receive confirmation email
+      const recoveryEmail = await checkForRecievedEmail(t, recipientEmail)
+      await deleteMessages()
 
-    // Ensure we have got the right email
+      // Ensure we have got the right email
     t.includes(recoveryEmail.subject, 'Your sign-in link', 'Email has correct subject') // eslint-disable-line
-    t.is(recoveryEmail.fromEmail, 'formbuilder@notifications.service.gov.uk', 'From email address is correct')
-    t.is(recoveryEmail.toEmail, recipientEmail, 'To email address is correct')
+      t.is(recoveryEmail.fromEmail, 'formbuilder@notifications.service.gov.uk', 'From email address is correct')
+      t.is(recoveryEmail.toEmail, recipientEmail, 'To email address is correct')
 
-    await page.goto(recoveryEmail.confirmationLink.href)
+      await page.goto(recoveryEmail.confirmationLink.href)
 
-    await recoverSavedAnswers(page, t, recipientEmail)
-  }
-)
+      await recoverSavedAnswers(page, t, recipientEmail)
+    }
+  )
+}
