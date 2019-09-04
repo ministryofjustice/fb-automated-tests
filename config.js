@@ -11,6 +11,7 @@ const {
 } = process.env
 
 const skipEmail = !EMAIL_SERVICE_API_KEY || process.env.SKIP_EMAIL
+const skipSaveReturn = process.env.SKIP_SAVE_RETURN || skipEmail
 
 const config = {
   continueWithSavedForm: 'a[href="/do-you-want-to-continue"]',
@@ -29,7 +30,8 @@ const config = {
   emailServerId: EMAIL_SERVICE_SERVER_ID,
   notifyAPIKey: NOTIFY_API_KEY,
   notifyPhoneNumber: NOTIFY_PHONE_NUMBER,
-  skipEmail
+  skipEmail,
+  skipSaveReturn
 }
 
 export default config

@@ -65,39 +65,47 @@ async function assertSavedAnswers (page, t, recipientEmail) {
   t.includes(signedInText, recipientEmail, 'User is signed in')
 }
 
-test(
-  'User saves answers with two factor authentication',
-  withPage,
-  async (t, page) => {
-    const recipientEmail = generateEmailAddress('save-form-2fa')
+const {skipSaveReturn} = config
 
-    // Start form and complete first answer
-    await startForm(page)
+if (skipSaveReturn) {
+  test('Skipping save and return 2fa tests', t => {
+    t.plan(0)
+  })
+} else {
+  test(
+    'User saves answers with two factor authentication',
+    withPage,
+    async (t, page) => {
+      const recipientEmail = generateEmailAddress('save-form-2fa')
 
-    // Click save for later
-    await saveProgress(page, recipientEmail)
+      // Start form and complete first answer
+      await startForm(page)
 
-    // Receive confirmation email
-    const email = await checkForRecievedEmail(t, recipientEmail)
-    await deleteMessages()
+      // Click save for later
+      await saveProgress(page, recipientEmail)
 
-    // Ensure we have got the right email
-    await assertCorrectEmail(email, recipientEmail, t)
+      // Receive confirmation email
+      const email = await checkForRecievedEmail(t, recipientEmail)
+      await deleteMessages()
 
-    // Click on confirmation link from email
-    await page.goto(email.confirmationLink.href)
+      // Ensure we have got the right email
+      await assertCorrectEmail(email, recipientEmail, t)
 
-    // Click to enable 2fa
-    await enable2fa(page)
+      // Click on confirmation link from email
+      await page.goto(email.confirmationLink.href)
 
-    // Receive code via SMS
-    const signInCode = await readCodeFromSMS(t)
+      // Click to enable 2fa
+      await enable2fa(page)
 
-    // Confirm 2FA with code from SMS
-    await page.type(config.enter2faCode, signInCode)
-    await page.clickAndWait(config.submitButton)
+      // Receive code via SMS
+      const signInCode = await readCodeFromSMS(t)
 
-    // Confirm we retrieved the correct answers
-    await assertSavedAnswers(page, t, recipientEmail)
-  }
-)
+      // Confirm 2FA with code from SMS
+      await page.type(config.enter2faCode, signInCode)
+      await page.clickAndWait(config.submitButton)
+
+      // Confirm we retrieved the correct answers
+      await assertSavedAnswers(page, t, recipientEmail)
+    }
+  )
+}
