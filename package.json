@@ -5,13 +5,13 @@
   "description": "End to end tests for a Form Builder form",
   "scripts": {
     "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
     "test": "ava --reset-cache && ava -v -s",
-    "lint:test": "npm run lint && npm run test",
     "test:ci": "rm -rf test-results && mkdir -p test-results/traces && mkdir -p test-results/har && mkdir -p test-results/screenshots && node ./node_modules/.bin/ava -v -s -- --screenshots"
   },
+  "author": "Form Builder Team <form-builder-team@digital.justice.gov.uk>",
   "license": "ISC",
   "dependencies": {
-    "@ministryofjustice/eslint-config-fb": "^1.0.7",
     "ava": "^2.1.0",
     "chrome-har": "^0.10.0",
     "dotenv": "^8.0.0",
@@ -22,12 +22,13 @@
     "puppeteer": "^1.18.0",
     "twilio": "^3.33.3"
   },
+  "devDependencies": {
+    "@ministryofjustice/eslint-config-fb": "^1.1.2",
+    "eslint-plugin-ava": "^7.1.0"
+  },
   "ava": {
     "require": [
       "esm"
     ]
-  },
-  "devDependencies": {
-    "eslint-plugin-ava": "^7.1.0"
   }
 }

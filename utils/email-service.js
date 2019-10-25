@@ -27,7 +27,7 @@ function deleteMessages () {
 
 async function checkForRecievedEmail (t, recipientEmail) {
   if (!config.skipEmail) {
-    console.log(`Checking for email (${(new Date()).toString()}) sent to ${recipientEmail}`) // eslint-disable-line no-console
+    console.log(`Checking for email (${new Date().toString()}) sent to ${recipientEmail}`) // eslint-disable-line no-console
     await pause(15)
 
     try {
