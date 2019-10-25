@@ -24,14 +24,14 @@ jobs:
           key: v1-dependencies-{{ checksum "package.json" }}
 
       - run:
-          name: Runs ESLint on the JavaScript code
+          name: Lints
           command: npm run lint
 
       - store_test_results:
           path: test-results
 
       # - run:
-      #     name: Runs browser based tests
+      #     name: Tests
       #     command: cd ~/tests && npm run test:ci
       #
       # - store_artifacts:

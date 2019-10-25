@@ -62,8 +62,8 @@ test('Full form completion including the email PDF', withPage, async (t, page) =
 
     await pause(15)
 
-    console.log(`Checking for email (${(new Date()).toString()}) sent to ${recipientEmail}`) // eslint-disable-line no-console
-    let result = await waitForEmail(recipientEmail)
+    console.log(`Checking for email (${new Date().toString()}) sent to ${recipientEmail}`) // eslint-disable-line no-console
+    const result = await waitForEmail(recipientEmail)
 
     const {
       attachments,
