@@ -30,29 +30,29 @@ jobs:
       - store_test_results:
           path: test-results
 
-      - run:
-          name: Runs browser based tests
-          command: cd ~/tests && npm run test:ci
-
-      - store_artifacts:
-          path: test-results
-
-      - store_test_results:
-          path: test-results
+      # - run:
+      #     name: Runs browser based tests
+      #     command: cd ~/tests && npm run test:ci
+      #
+      # - store_artifacts:
+      #     path: test-results
+      #
+      # - store_test_results:
+      #     path: test-results
 
 workflows:
   version: 2
   commit-workflow:
     jobs:
       - build
-  scheduled-workflow:
-    triggers:
-      - schedule:
+  # scheduled-workflow:
+    # triggers:
+    #   - schedule:
           # Step syntax is unsupported on CircleCI
-          cron: "0,30 * * * *"
-          filters:
-            branches:
-              only: master
+          # cron: "0,30 * * * *"
+          # filters:
+          #   branches:
+          #     only: master
 
-    jobs:
-      - build
+    # jobs:
+      # - build
