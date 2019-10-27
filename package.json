@@ -1,7 +1,7 @@
 {
   "name": "fb-automated-tests",
   "private": true,
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "End to end tests for a Form Builder form",
   "scripts": {
     "lint": "eslint .",
@@ -24,7 +24,7 @@
   },
   "devDependencies": {
     "@ministryofjustice/eslint-config-fb": "^1.1.2",
-    "eslint-plugin-ava": "^7.1.0"
+    "eslint-plugin-ava": "^9.0.0"
   },
   "ava": {
     "require": [
