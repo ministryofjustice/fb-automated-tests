@@ -24,7 +24,7 @@
   },
   "devDependencies": {
     "@ministryofjustice/eslint-config-fb": "^1.1.2",
-    "eslint-plugin-ava": "^7.1.0"
+    "eslint-plugin-ava": "^9.0.0"
   },
   "ava": {
     "require": [
